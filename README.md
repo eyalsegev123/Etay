@@ -1,7 +1,7 @@
 # Etay's Memorial Website
 
 ## Overview
-A heartfelt tribute to Etay, celebrating his life and legacy. This website serves as a digital memorial where visitors can explore photos, share stories, and connect with Etay's memory.
+A heartfelt tribute to Etay, celebrating his life and legacy. This website serves as a digital memorial where visitors can explore photos, share stories, and connect with Etay's memory. Through the interactive photo gallery, visitors can view cherished moments captured throughout Etay's life. The stories section allows friends and family to share their personal anecdotes and memories, creating a rich tapestry of Etay's impact on those around him. The life timeline provides a visual journey through key milestones and significant events, offering a comprehensive view of Etay's life. Additionally, the contact form enables visitors to request memorial items, submit their own stories, or reach out directly via email. This website is a testament to Etay's enduring legacy, ensuring that his memory lives on in the hearts of all who knew him.
 
 ## Features
 ### 📸 Photo Gallery
@@ -35,24 +35,3 @@ A heartfelt tribute to Etay, celebrating his life and legacy. This website serve
 - EmailJS
 - React Spring
 - Swiper
-
-## Getting Started
-
-### Prerequisites
-- Node.js (v18 or higher)
-- npm
-
-### Installation
-```bash
-# Clone the repository
-git clone [repository-url]
-
-# Navigate to project directory
-cd frontend
-
-# Install dependencies
-npm install
-
-# Start development server
-npm start
-```
