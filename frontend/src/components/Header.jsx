@@ -1,19 +1,9 @@
-import { useState,
-     useEffect } from 'react';
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  IconButton,
-  Typography,
-  Menu,
-  Container,
-  Button,
-  MenuItem,
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import { useState, useEffect } from 'react';
+import { AppBar, Container, Toolbar } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
+import DesktopHeader from './DesktopHeader';
+import MobileHeader from './MobileHeader';
 
 const navigation = [
   { name: 'Home', href: 'welcome' },
@@ -24,43 +14,17 @@ const navigation = [
 ];
 
 const Header = ({ hide = false }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
   const theme = useTheme();
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 100,
   });
-
-  const handleOpenMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleCloseMenu = () => {
-    setAnchorEl(null);
-  };
-
-  const scrollToSection = (sectionId) => {
-    handleCloseMenu();
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const headerHeight = 64; // AppBar height
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = window.pageYOffset + elementPosition - headerHeight;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  // Add active section tracking
   const [activeSection, setActiveSection] = useState('welcome');
 
   useEffect(() => {
     const handleScroll = () => {
       const sections = navigation.map(item => document.getElementById(item.href));
-      const scrollPosition = window.scrollY + 100; // Add offset for better detection
+      const scrollPosition = window.scrollY + 100;
 
       sections.forEach((section, index) => {
         if (section) {
@@ -84,138 +48,24 @@ const Header = ({ hide = false }) => {
     <AppBar 
       position="fixed"
       sx={{
-        background: trigger 
-          ? theme.palette.background.default
-          : 'transparent',
-        boxShadow: trigger 
-          ? 1
-          : 'none',
+        background: trigger ? theme.palette.background.default : 'transparent',
+        boxShadow: trigger ? 1 : 'none',
         transition: 'all 0.3s ease-in-out',
         backdropFilter: trigger ? 'blur(8px)' : 'none',
-        backgroundColor: trigger 
-          ? 'rgba(255, 255, 255, 0.95)' 
-          : 'transparent',
+        backgroundColor: trigger ? 'rgba(255, 255, 255, 0.95)' : 'transparent',
       }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* Desktop Logo/Title */}
-          <Typography
-            variant="h6"
-            noWrap
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontWeight: 700,
-              color: trigger ? 'text.primary' : 'white',
-              textDecoration: 'none',
-              transition: 'color 0.3s ease-in-out',
-            }}
-          >
-            רס״ר איתי אזולאי
-          </Typography>
-
-          {/* Mobile Menu */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenMenu}
-              sx={{ color: trigger ? 'text.primary' : 'white' }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorEl)}
-              onClose={handleCloseMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {navigation.map((item) => (
-                <MenuItem 
-                  key={item.name} 
-                  onClick={() => scrollToSection(item.href)}
-                >
-                  <Typography textAlign="center">{item.name}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-
-          {/* Mobile Logo/Title */}
-          <Typography
-            variant="h6"
-            noWrap
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontWeight: 700,
-              color: trigger ? 'text.primary' : 'white',
-              textDecoration: 'none',
-              transition: 'color 0.3s ease-in-out',
-            }}
-          >
-            In Memory of Itay
-          </Typography>
-
-          {/* Desktop Navigation */}
-          <Box 
-            sx={{ 
-              flexGrow: 1, 
-              display: { xs: 'none', md: 'flex' },
-              justifyContent: 'flex-end'
-            }}
-          >
-            {navigation.map((item) => (
-              <Button
-                key={item.name}
-                onClick={() => scrollToSection(item.href)}
-                sx={{
-                  my: 2,
-                  mx: 1,
-                  color: trigger ? 'text.primary' : 'white',
-                  display: 'block',
-                  transition: 'all 0.2s ease-in-out',
-                  position: 'relative',
-                  '&:after': {
-                    content: '""',
-                    position: 'absolute',
-                    bottom: '0',
-                    left: '0',
-                    width: activeSection === item.href ? '100%' : '0%',
-                    height: '2px',
-                    backgroundColor: trigger ? 'primary.main' : 'white',
-                    transition: 'width 0.3s ease-in-out',
-                  },
-                  '&:hover': {
-                    backgroundColor: trigger 
-                      ? 'rgba(0, 0, 0, 0.04)'
-                      : 'rgba(255, 255, 255, 0.1)',
-                    transform: 'translateY(-2px)',
-                    '&:after': {
-                      width: '100%',
-                    },
-                  },
-                }}
-              >
-                {item.name}
-              </Button>
-            ))}
-          </Box>
+          <DesktopHeader 
+            navigation={navigation}
+            activeSection={activeSection}
+            trigger={trigger}
+          />
+          <MobileHeader 
+            navigation={navigation}
+            trigger={trigger}
+          />
         </Toolbar>
       </Container>
     </AppBar>

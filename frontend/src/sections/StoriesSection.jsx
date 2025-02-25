@@ -1,7 +1,7 @@
 import { Box, Container, Typography, Card, CardContent, CardMedia, Button } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useNavigate } from 'react-router-dom';
-import PersonIcon from '@mui/icons-material/Person';
+import StoryCard from '../components/StoryCard';
 // Import Swiper modules correctly
 import { Navigation as SwiperNavigation, Pagination as SwiperPagination } from 'swiper/modules';
 import 'swiper/css';
@@ -30,6 +30,33 @@ const StoriesSection = () => {
       date: "2024-01-10",
       image: "https://picsum.photos/400/301",
       tags: ["Friends", "Adventure"],
+    },
+    {
+      id: 3,
+      title: "A Day to Remember",
+      preview: "It was a sunny afternoon...",
+      author: "Michael Green",
+      date: "2024-01-05",
+      image: "https://picsum.photos/400/302",
+      tags: ["Family", "Holiday"],
+    },
+    {
+      id: 4,
+      title: "Cherished Times",
+      preview: "We laughed and played...",
+      author: "Rachel Blue",
+      date: "2024-01-02",
+      image: "https://picsum.photos/400/303",
+      tags: ["Friends", "Joy"],
+    },
+    {
+      id: 5,
+      title: "Memorable Adventures",
+      preview: "Exploring the unknown...",
+      author: "Tom White",
+      date: "2024-01-01",
+      image: "https://picsum.photos/400/304",
+      tags: ["Adventure", "Travel"],
     },
     // Add more stories as needed
   ];
@@ -69,46 +96,7 @@ const StoriesSection = () => {
         >
           {stories.map((story) => (
             <SwiperSlide key={story.id}>
-              <Card 
-                sx={{ 
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  transition: 'transform 0.2s',
-                  '&:hover': {
-                    transform: 'translateY(-4px)',
-                  },
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={story.image}
-                  alt={story.title}
-                />
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h5" component="h3">
-                    {story.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" paragraph>
-                    {story.preview}
-                  </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                    <PersonIcon sx={{ fontSize: 20, mr: 1 }} color="action" />
-                    <Typography variant="subtitle2" color="text.secondary">
-                      {story.author}
-                    </Typography>
-                  </Box>
-                  <Button 
-                    variant="contained" 
-                    onClick={() => navigate(`/story/${story.id}`)}
-                    fullWidth
-                    sx={{ mt: 'auto' }}
-                  >
-                    Read More
-                  </Button>
-                </CardContent>
-              </Card>
+              <StoryCard story={story} />
             </SwiperSlide>
           ))}
         </Swiper>
