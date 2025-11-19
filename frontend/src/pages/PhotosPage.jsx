@@ -1,81 +1,122 @@
-import { useState } from 'react';
-import { 
-  Box, 
-  Container, 
-  Typography, 
-  IconButton,
-  Modal,
-} from '@mui/material';
-import { Masonry } from '@mui/lab';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const allPhotos = [
-  { src: '/assets/itay1.jpg', title: 'Itay 1' },
-  { src: '/assets/itay2.jpg', title: 'Itay 2' },
-  // ...add more photos
-];
+// MUI components
+import {
+  Box,
+  Container,
+  Button,
+  Alert,
+} from "@mui/material";
+
+// MUI icons
+import {
+  Google as GoogleIcon,
+} from "@mui/icons-material";
+
+// Project services
+import googleDriveService from "../services/googleDriveService";
+
+// Project components
+import GalleryHeader from "../components/GalleryHeader";
+import GalleryModal from "../components/GalleryModal";
+import GalleryGrid, { GalleryLoading, GalleryEmptyState } from "../components/GalleryGrid";
+
 
 const PhotosPage = () => {
   const navigate = useNavigate();
+  const [photos, setPhotos] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Initialize and fetch photos
+  useEffect(() => {
+    const bootstrapGallery = async () => {
+      try {
+        setLoading(true);
+        await loadPhotosFromDrive();
+      } catch (err) {
+        console.error("Error loading photos:", err);
+        setError("Failed to connect to Google Drive. Please try again later.");
+        setLoading(false);
+      }
+    };
+
+    bootstrapGallery();
+  }, []);
+
+  // Fetch photos from Google Drive
+  const loadPhotosFromDrive = async () => {
+    try {
+      setLoading(true);
+      const photoData = await googleDriveService.getPhotos();
+      setPhotos(photoData);
+      setLoading(false);
+    } catch (err) {
+      console.error("Error fetching photos:", err);
+      setError("Failed to load photos. Please refresh and try again.");
+      setLoading(false);
+    }
+  };
+
+  // Get current photo index
+  const currentPhotoIndex = selectedImage
+    ? photos.findIndex((photo) => photo.id === selectedImage.id)
+    : -1;
+
+  // Navigate to next/previous image in modal
+  const handleNavigateSelectedImage = (direction) => {
+    if (photos.length === 0) return;
+
+    let newIndex = currentPhotoIndex + direction;
+
+    if (newIndex < 0) newIndex = photos.length - 1;
+    if (newIndex >= photos.length) newIndex = 0;
+
+    setSelectedImage(photos[newIndex]);
+  };
+
+  const galleryStats = {
+    totalPhotos: photos.length,
+  };
+
+  const handlePhotoSelect = (photo) => setSelectedImage(photo);
+  const handleCloseLightbox = () => setSelectedImage(null);
 
   return (
-    <Box sx={{ minHeight: '100vh', pt: 2, pb: 8 }}>
+    <Box sx={{ minHeight: "100vh", py: { xs: 4, md: 8 }, bgcolor: "grey.50" }}>
       <Container maxWidth="xl">
-        <IconButton 
-          onClick={() => navigate(-1)} 
-          sx={{ mb: 2 }}
-          aria-label="back"
-        >
-          <ArrowBackIcon />
-        </IconButton>
+        <GalleryHeader onBack={() => navigate(-1)} statistics={galleryStats} />
 
-        <Typography variant="h2" component="h1" gutterBottom textAlign="center">
-          גלריית תמונות
-        </Typography>
+        {error && (
+          <Alert severity="error" sx={{ mb: 3 }}>
+            {error}
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<GoogleIcon />}
+              onClick={loadPhotosFromDrive}
+              sx={{ ml: 2 }}
+            >
+              נסה שוב
+            </Button>
+          </Alert>
+        )}
 
-        <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={2}>
-          {allPhotos.map((photo, index) => (
-            <Box
-              key={index}
-              onClick={() => setSelectedImage(photo)}
-              component="img"
-              src={photo.src}
-              alt={photo.title}
-              sx={{
-                width: '100%',
-                borderRadius: 2,
-                cursor: 'pointer',
-                transition: 'transform 0.3s ease-in-out',
-                '&:hover': {
-                  transform: 'scale(1.02)',
-                }
-              }}
-            />
-          ))}
-        </Masonry>
+        {loading ? (
+          <GalleryLoading />
+        ) : !error && photos.length > 0 ? (
+          <GalleryGrid photos={photos} onSelectPhoto={handlePhotoSelect} />
+        ) : !error ? (
+          <GalleryEmptyState />
+        ) : null}
 
-        <Modal
-          open={!!selectedImage}
-          onClose={() => setSelectedImage(null)}
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Box
-            component="img"
-            src={selectedImage?.src}
-            alt={selectedImage?.title}
-            sx={{
-              maxHeight: '90vh',
-              maxWidth: '90vw',
-              objectFit: 'contain',
-            }}
-          />
-        </Modal>
+        <GalleryModal
+          photo={selectedImage}
+          onClose={handleCloseLightbox}
+          onNavigate={handleNavigateSelectedImage}
+        />
       </Container>
     </Box>
   );
