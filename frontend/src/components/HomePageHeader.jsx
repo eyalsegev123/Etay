@@ -21,11 +21,11 @@ import ShareStoryModal from './ShareStoryModal';
 // ==========================================
 
 const NAVIGATION_ITEMS = [
-  { name: 'Home', href: 'welcome' },
-  { name: 'Timeline', href: 'timeline' },
-  { name: 'Photos', href: 'photos' },
-  { name: 'Stories', href: 'stories' },
-  { name: 'Contact', href: 'contact' },
+  { name: 'בית', href: 'welcome' },
+  { name: 'ציר זמן', href: 'timeline' },
+  { name: 'תמונות', href: 'photos' },
+  { name: 'סיפורים', href: 'stories' },
+  { name: 'צור קשר', href: 'contact' },
 ];
 
 // ==========================================
@@ -81,25 +81,27 @@ const MobileNavigation = ({ navigation, trigger, onShareClick }) => {
           anchorEl={anchorEl}
           anchorOrigin={{
             vertical: 'bottom',
-            horizontal: 'left',
+            horizontal: 'right',
           }}
           keepMounted
           transformOrigin={{
             vertical: 'top',
-            horizontal: 'left',
+            horizontal: 'right',
           }}
           open={Boolean(anchorEl)}
           onClose={handleCloseMenu}
           sx={{
             display: { xs: 'block', md: 'none' },
+            direction: 'rtl'
           }}
         >
           {navigation.map((item) => (
             <MenuItem 
               key={item.name} 
               onClick={() => scrollToSection(item.href)}
+              sx={{ justifyContent: 'flex-start' }}
             >
-              <Typography textAlign="center">{item.name}</Typography>
+              <Typography textAlign="right">{item.name}</Typography>
             </MenuItem>
           ))}
           <MenuItem 
@@ -108,11 +110,12 @@ const MobileNavigation = ({ navigation, trigger, onShareClick }) => {
               borderTop: 1,
               borderColor: 'divider',
               mt: 1,
+              justifyContent: 'flex-start'
             }}
           >
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: '100%', justifyContent: 'center' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: '100%' }}>
               <ShareIcon fontSize="small" />
-              <Typography textAlign="center" sx={{ fontWeight: 600 }}>
+              <Typography textAlign="right" sx={{ fontWeight: 600 }}>
                 שתף את הסיפור שלך
               </Typography>
             </Box>
@@ -162,7 +165,7 @@ const DesktopNavigation = ({ navigation, activeSection, trigger, onShareClick })
         sx={{
           flexGrow: 0,
           display: { xs: 'none', md: 'flex' },
-          mr: 'auto',
+          ml: 'auto',
         }}
       >
         {navigation.map((item) => (
@@ -231,7 +234,7 @@ const DesktopNavigation = ({ navigation, activeSection, trigger, onShareClick })
         sx={{
           display: { xs: 'none', md: 'flex' },
           fontWeight: 700,
-          marginLeft: 'auto',
+          marginRight: 'auto',
           color: trigger ? 'text.primary' : 'white',
         }}
       >
@@ -296,7 +299,7 @@ const HomePageHeader = () => {
         }}
       >
         <Container maxWidth="xl">
-          <Toolbar disableGutters>
+          <Toolbar disableGutters sx={{ direction: 'rtl' }}>
             <DesktopNavigation 
               navigation={NAVIGATION_ITEMS}
               activeSection={activeSection}

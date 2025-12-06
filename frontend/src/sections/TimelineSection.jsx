@@ -47,7 +47,7 @@ const TimelineSection = () => {
               <VerticalTimelineElement
                 key={event.id}
                 className="vertical-timeline-element"
-                contentStyle={{ background: "#fff", color: "#000" }}
+                contentStyle={{ background: "#fff", color: "#000", direction: "rtl", textAlign: "right" }}
                 contentArrowStyle={{ borderRight: "7px solid #fff" }}
                 date={event.date}
                 iconStyle={{ background: "#1976d2", color: "#fff" }}

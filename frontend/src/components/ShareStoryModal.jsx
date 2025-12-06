@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Modal,
   Box,
@@ -51,7 +51,7 @@ const PhotoPreview = ({ file, onRemove, index }) => {
   const [preview, setPreview] = useState(null);
 
   // Generate preview URL
-  useState(() => {
+  useEffect(() => {
     const reader = new FileReader();
     reader.onloadend = () => {
       setPreview(reader.result);

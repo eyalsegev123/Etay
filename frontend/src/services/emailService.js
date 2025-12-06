@@ -22,9 +22,8 @@ const fileToBase64 = (file) => {
 
 // Compress image if needed (basic compression by resizing)
 const compressImage = (base64String, maxWidth = 800) => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const img = new Image();
-    img.src = base64String;
     img.onload = () => {
       const canvas = document.createElement('canvas');
       let width = img.width;
@@ -44,6 +43,8 @@ const compressImage = (base64String, maxWidth = 800) => {
       // Convert to base64 with quality compression
       resolve(canvas.toDataURL('image/jpeg', 0.7));
     };
+    img.onerror = (error) => reject(new Error('Failed to load image for compression'));
+    img.src = base64String;
   });
 };
 
@@ -194,4 +195,3 @@ export const validatePhotos = (files) => {
 
   return { isValid: true, error: null };
 };
-

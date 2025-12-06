@@ -40,11 +40,12 @@ const ContactSection = () => {
       id="contact"
       component="section" 
       sx={{ 
-        py: { xs: 12, md: 16 }, // Increased padding
-        minHeight: { xs: '80vh', md: '90vh' }, // Added minimum height
+        py: { xs: 12, md: 16 },
+        minHeight: { xs: '80vh', md: '90vh' },
         bgcolor: 'background.paper',
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        direction: 'rtl'
       }}
     >
       <Container maxWidth="md">
@@ -54,7 +55,7 @@ const ContactSection = () => {
           gutterBottom
           sx={{ textAlign: 'center', mb: 4 }}
         >
-          Contact & Memorial Requests
+          צור קשר ובקשות הנצחה
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate>
           <Grid container spacing={3}>
@@ -63,9 +64,10 @@ const ContactSection = () => {
                 required
                 fullWidth
                 name="name"
-                label="Name"
+                label="שם מלא"
                 value={formData.name}
                 onChange={handleChange}
+                sx={{ textAlign: 'right' }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -73,19 +75,21 @@ const ContactSection = () => {
                 required
                 fullWidth
                 name="email"
-                label="Email"
+                label="אימייל"
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
+                sx={{ textAlign: 'right' }}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 fullWidth
                 name="itemRequest"
-                label="Memorial Item Request"
+                label="בקשה לפריט הנצחה"
                 value={formData.itemRequest}
                 onChange={handleChange}
+                sx={{ textAlign: 'right' }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -95,9 +99,10 @@ const ContactSection = () => {
                 multiline
                 rows={4}
                 name="message"
-                label="Message"
+                label="הודעה"
                 value={formData.message}
                 onChange={handleChange}
+                sx={{ textAlign: 'right' }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -107,19 +112,19 @@ const ContactSection = () => {
                 size="large"
                 fullWidth
               >
-                Send Message
+                שלח הודעה
               </Button>
             </Grid>
           </Grid>
         </Box>
         {status === 'success' && (
           <Alert severity="success" sx={{ mt: 2 }}>
-            Message sent successfully!
+            ההודעה נשלחה בהצלחה!
           </Alert>
         )}
         {status === 'error' && (
           <Alert severity="error" sx={{ mt: 2 }}>
-            Failed to send message. Please try again.
+            שגיאה בשליחת ההודעה. אנא נסה שוב.
           </Alert>
         )}
       </Container>
