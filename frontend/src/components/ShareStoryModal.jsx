@@ -291,6 +291,7 @@ export default function ShareStoryModal({ open, onClose }) {
                       error={!!errors.name}
                       helperText={errors.name}
                       disabled={submissionStatus === 'submitting'}
+                      sx={{ '& .MuiInputBase-input': { textAlign: 'right' }, '& .MuiInputLabel-root': { right: 25, left: 'auto', transformOrigin: 'top right' } }}
                     />
                   </Grid>
 
@@ -305,6 +306,7 @@ export default function ShareStoryModal({ open, onClose }) {
                       error={!!errors.email}
                       helperText={errors.email || 'אופציונלי'}
                       disabled={submissionStatus === 'submitting'}
+                      sx={{ '& .MuiInputBase-input': { textAlign: 'right' }, '& .MuiInputLabel-root': { right: 25, left: 'auto', transformOrigin: 'top right' } }}
                     />
                   </Grid>
 
@@ -313,11 +315,12 @@ export default function ShareStoryModal({ open, onClose }) {
                     <TextField
                       fullWidth
                       label="הקשר שלך לאיתי"
-                      placeholder="למשל: חבר, מפקד, בן משפחה"
+                      placeholder=""
                       value={formData.relationship}
                       onChange={handleChange('relationship')}
                       helperText="אופציונלי"
                       disabled={submissionStatus === 'submitting'}
+                      sx={{ '& .MuiInputBase-input': { textAlign: 'right' }, '& .MuiInputLabel-root': { right: 25, left: 'auto', transformOrigin: 'top right' } }}
                     />
                   </Grid>
 
@@ -326,11 +329,12 @@ export default function ShareStoryModal({ open, onClose }) {
                     <TextField
                       fullWidth
                       label="מיקום"
-                      placeholder="למשל: תל אביב, חיפה"
+                      placeholder=""
                       value={formData.location}
                       onChange={handleChange('location')}
                       helperText="אופציונלי"
                       disabled={submissionStatus === 'submitting'}
+                      sx={{ '& .MuiInputBase-input': { textAlign: 'right' }, '& .MuiInputLabel-root': { right: 25, left: 'auto', transformOrigin: 'top right' } }}
                     />
                   </Grid>
 
@@ -345,6 +349,7 @@ export default function ShareStoryModal({ open, onClose }) {
                       error={!!errors.title}
                       helperText={errors.title}
                       disabled={submissionStatus === 'submitting'}
+                      sx={{ '& .MuiInputBase-input': { textAlign: 'right' }, '& .MuiInputLabel-root': { right: 25, left: 'auto', transformOrigin: 'top right' } }}
                     />
                   </Grid>
 
@@ -356,7 +361,7 @@ export default function ShareStoryModal({ open, onClose }) {
                       multiline
                       rows={6}
                       label="הסיפור שלך"
-                      placeholder="שתף את הזיכרון או הסיפור שלך על איתי..."
+                      placeholder=""
                       value={formData.content}
                       onChange={handleChange('content')}
                       error={!!errors.content}
@@ -365,6 +370,7 @@ export default function ShareStoryModal({ open, onClose }) {
                         `${formData.content.length}/5000 תווים (מינימום 50)`
                       }
                       disabled={submissionStatus === 'submitting'}
+                      sx={{ '& .MuiInputBase-input': { textAlign: 'right' }, '& .MuiInputLabel-root': { right: 25, left: 'auto', transformOrigin: 'top right' } }}
                     />
                   </Grid>
 
