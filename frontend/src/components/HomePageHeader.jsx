@@ -123,10 +123,12 @@ const MobileNavigation = ({ navigation, trigger, onShareClick }) => {
         </Menu>
       </Box>
 
-      {/* Mobile Title */}
+      {/* Mobile Title - Clickable */}
       <Typography
         variant="h6"
         noWrap
+        component="div"
+        onClick={() => scrollToSection('welcome')}
         sx={{
           mr: 2,
           display: { xs: 'flex', md: 'none' },
@@ -135,9 +137,12 @@ const MobileNavigation = ({ navigation, trigger, onShareClick }) => {
           color: trigger ? 'text.primary' : 'white',
           textDecoration: 'none',
           transition: 'color 0.3s ease-in-out',
+          justifyContent: 'flex-end', // Align text to right for RTL
+          cursor: 'pointer', // Pointer cursor
+          textShadow: trigger ? 'none' : '0 2px 4px rgba(0,0,0,0.6)', // Added shadow
         }}
       >
-        In Memory of Itay
+        לזכר איתי אזולאי ז״ל
       </Typography>
     </>
   );
@@ -179,6 +184,8 @@ const DesktopNavigation = ({ navigation, activeSection, trigger, onShareClick })
               display: 'block',
               transition: 'all 0.2s ease-in-out',
               position: 'relative',
+              fontWeight: 600, // Added for better visibility
+              textShadow: trigger ? 'none' : '0 2px 4px rgba(0,0,0,0.6)', // Added text shadow
               '&:after': {
                 content: '""',
                 position: 'absolute',
@@ -188,6 +195,7 @@ const DesktopNavigation = ({ navigation, activeSection, trigger, onShareClick })
                 height: '2px',
                 backgroundColor: trigger ? 'primary.main' : 'white',
                 transition: 'width 0.3s ease-in-out',
+                boxShadow: trigger ? 'none' : '0 2px 4px rgba(0,0,0,0.6)', // Shadow for underline too
               },
               '&:hover': {
                 backgroundColor: trigger 
@@ -227,15 +235,24 @@ const DesktopNavigation = ({ navigation, activeSection, trigger, onShareClick })
         שתף את הסיפור שלך
       </Button>
 
-      {/* Desktop Title */}
+      {/* Desktop Title - Clickable to scroll home */}
       <Typography
         variant="h6"
         noWrap
+        component="a" // Changed to 'a' to be semantic
+        onClick={() => scrollToSection('welcome')} // Scroll to top
         sx={{
           display: { xs: 'none', md: 'flex' },
           fontWeight: 700,
           marginRight: 'auto',
           color: trigger ? 'text.primary' : 'white',
+          textDecoration: 'none',
+          cursor: 'pointer', // Pointer cursor
+          textShadow: trigger ? 'none' : '0 2px 4px rgba(0,0,0,0.6)', // Added shadow
+          transition: 'opacity 0.2s',
+          '&:hover': {
+            opacity: 0.8,
+          }
         }}
       >
         לזכר איתי אזולאי ז״ל

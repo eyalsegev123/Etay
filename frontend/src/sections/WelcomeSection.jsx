@@ -46,7 +46,7 @@ const WelcomeSection = () => {
         }}
       />
 
-      {/* Dark Overlay */}
+      {/* Dark Overlay - Gradient at Top (for Header) and Bottom (for Title) */}
       <Box
         sx={{
           position: 'absolute',
@@ -54,15 +54,25 @@ const WelcomeSection = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%)',
+          background: `
+            linear-gradient(to bottom, 
+              rgba(0,0,0,0.7) 0%, 
+              rgba(0,0,0,0) 20%, 
+              rgba(0,0,0,0) 60%, 
+              rgba(0,0,0,0.8) 100%
+            )
+          `,
           zIndex: 1,
         }}
       />
 
-      {/* Content */}
+      {/* Content - Moved to bottom to clear the face */}
       <Box
         sx={{
-          position: 'relative',
+          position: 'absolute',
+          bottom: '15%',
+          left: 0,
+          right: 0,
           zIndex: 2,
           textAlign: 'center',
           color: 'white',
@@ -74,20 +84,21 @@ const WelcomeSection = () => {
           component="h1" 
           sx={{ 
             fontWeight: 700, 
-            mb: 2,
-            textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-            fontSize: { xs: '2.5rem', md: '4rem' }
+            mb: 1,
+            textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
+            fontSize: { xs: '2.5rem', md: '4.5rem' }
           }}
         >
           לזכר איתי אזולאי ז״ל
         </Typography>
         <Typography 
-          variant="h5" 
+          variant="h4" 
           sx={{ 
             fontWeight: 300, 
-            opacity: 0.9,
-            textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
-            mb: 4
+            opacity: 0.95,
+            textShadow: '1px 1px 2px rgba(0,0,0,0.7)',
+            mb: 4,
+            letterSpacing: '2px'
           }}
         >
           1999 - 2024

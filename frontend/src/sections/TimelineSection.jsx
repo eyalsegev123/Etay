@@ -36,7 +36,12 @@ const TimelineSection = () => {
           variant="h2"
           component="h2"
           gutterBottom
-          sx={{ textAlign: "center", mb: 8 }}
+          sx={{ 
+            textAlign: "center", 
+            mb: 8,
+            fontSize: { xs: '2.5rem', md: '3.75rem' }, // Responsive font size
+            fontWeight: 700
+          }}
         >
           מסע החיים של איתי
         </Typography>
