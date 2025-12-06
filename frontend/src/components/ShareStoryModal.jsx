@@ -265,7 +265,14 @@ export default function ShareStoryModal({ open, onClose }) {
             {/* Success Message */}
             {submissionStatus === 'success' && (
               <Alert severity="success" sx={{ mb: 3 }}>
-                תודה רבה! הסיפור שלך נשלח בהצלחה. נעריך את שיתוף הזיכרון שלך.
+                <Typography variant="body2" component="div">
+                  תודה רבה! הסיפור שלך נשלח בהצלחה. נעריך את שיתוף הזיכרון שלך.
+                  <br />
+                  <br />
+                  לתמונות באיכות גבוהה, אנא שלחו אותן ישירות לכתובת המייל:
+                  <br />
+                  <strong>eyalsegev123@gmail.com</strong>
+                </Typography>
               </Alert>
             )}
 
@@ -403,6 +410,7 @@ export default function ShareStoryModal({ open, onClose }) {
                           startIcon={<CloudUploadIcon />}
                           disabled={submissionStatus === 'submitting'}
                           fullWidth
+                          sx={{ '& .MuiButton-startIcon': { marginLeft: 2 } }}
                         >
                           בחר תמונות
                           <input

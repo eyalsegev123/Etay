@@ -21,7 +21,7 @@ const fileToBase64 = (file) => {
 };
 
 // Compress image if needed (basic compression by resizing)
-const compressImage = (base64String, maxWidth = 800) => {
+const compressImage = (base64String, maxWidth = 250) => {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => {
@@ -40,8 +40,8 @@ const compressImage = (base64String, maxWidth = 800) => {
       const ctx = canvas.getContext('2d');
       ctx.drawImage(img, 0, 0, width, height);
 
-      // Convert to base64 with quality compression
-      resolve(canvas.toDataURL('image/jpeg', 0.7));
+      // Convert to base64 with quality compression (0.5 for better compression)
+      resolve(canvas.toDataURL('image/jpeg', 0.5));
     };
     img.onerror = (error) => reject(new Error('Failed to load image for compression'));
     img.src = base64String;
