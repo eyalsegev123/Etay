@@ -13,10 +13,194 @@ import {
   Button,
   Alert,
 } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import PersonIcon from '@mui/icons-material/Person';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import {
+  ArrowBack as ArrowBackIcon,
+  CalendarToday as CalendarTodayIcon,
+  Person as PersonIcon,
+  LocationOn as LocationOnIcon,
+} from '@mui/icons-material';
+import storiesData from '../assets/data/stories.json';
+
+// ==========================================
+// Sub-components
+// ==========================================
+
+const StoryHeader = ({ title, author, date, location }) => (
+  <>
+    <Typography variant="h2" component="h1" gutterBottom sx={{ textAlign: 'right' }}>
+      {title}
+    </Typography>
+
+    <Box sx={{ display: 'flex', gap: 2, mb: 4, flexWrap: 'wrap', justifyContent: 'flex-start', direction: 'rtl' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Typography variant="subtitle1" color="text.secondary">
+          {author}
+        </Typography>
+        <PersonIcon color="action" />
+      </Box>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Typography variant="subtitle1" color="text.secondary">
+          {new Date(date).toLocaleDateString('he-IL')}
+        </Typography>
+        <CalendarTodayIcon color="action" />
+      </Box>
+      {location && (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Typography variant="subtitle1" color="text.secondary">
+            {location}
+          </Typography>
+          <LocationOnIcon color="action" />
+        </Box>
+      )}
+    </Box>
+  </>
+);
+
+const StoryTags = ({ tags }) => (
+  <Box sx={{ mb: 4, direction: 'rtl', textAlign: 'right' }}>
+    {tags.map((tag) => (
+      <Chip
+        key={tag}
+        label={tag}
+        sx={{ ml: 1, mb: 1 }}
+        size="small"
+      />
+    ))}
+  </Box>
+);
+
+const StoryContent = ({ content }) => (
+  <Typography variant="body1" paragraph sx={{ 
+    lineHeight: 1.8, 
+    fontSize: '1.1rem', 
+    whiteSpace: 'pre-line',
+    textAlign: 'right',
+    direction: 'rtl'
+  }}>
+    {content}
+  </Typography>
+);
+
+const AdditionalImages = ({ images }) => {
+  if (!images || images.length === 0) return null;
+  
+  return (
+    <Box sx={{ mt: 4, direction: 'rtl' }}>
+      <Typography variant="h6" gutterBottom sx={{ textAlign: 'right' }}>
+        תמונות נוספות
+      </Typography>
+      <Box 
+        sx={{ 
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+          gap: 2 
+        }}
+      >
+        {images.map((img, index) => (
+          <Box
+            key={index}
+            component="img"
+            src={img}
+            alt={`תמונה נוספת ${index + 1}`}
+            sx={{
+              width: '100%',
+              height: '300px',
+              objectFit: 'cover',
+              borderRadius: 1,
+            }}
+          />
+        ))}
+      </Box>
+    </Box>
+  );
+};
+
+const RelatedStories = ({ stories, onNavigate }) => {
+  if (!stories || stories.length === 0) return null;
+
+  return (
+    <Box sx={{ mt: 6, direction: 'rtl' }}>
+      <Divider sx={{ mb: 4 }} />
+      <Typography variant="h5" gutterBottom sx={{ textAlign: 'right' }}>
+        סיפורים קשורים
+      </Typography>
+      <Box 
+        sx={{ 
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr' },
+          gap: 3
+        }}
+      >
+        {stories.map((story) => (
+          <Paper 
+            key={story.id}
+            elevation={2}
+            sx={{ 
+              borderRadius: 2,
+              overflow: 'hidden',
+              transition: 'transform 0.2s, box-shadow 0.2s',
+              direction: 'rtl',
+              '&:hover': {
+                transform: 'translateY(-4px)',
+                boxShadow: 6
+              },
+              cursor: 'pointer'
+            }}
+            onClick={() => onNavigate(story.id)}
+          >
+            <Box
+              component="img"
+              src={story.image}
+              alt={story.title}
+              sx={{
+                width: '100%',
+                height: '160px',
+                objectFit: 'cover'
+              }}
+            />
+            <Box sx={{ p: 2 }}>
+              <Typography variant="h6" gutterBottom sx={{ textAlign: 'right' }}>
+                {story.title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 1, textAlign: 'right' }}>
+                מאת {story.author}
+              </Typography>
+              <Typography variant="body2" noWrap sx={{ textAlign: 'right' }}>
+                {story.preview}
+              </Typography>
+            </Box>
+          </Paper>
+        ))}
+      </Box>
+    </Box>
+  );
+};
+
+const LoadingSkeleton = () => (
+  <Box sx={{ mt: 4 }}>
+    <Skeleton variant="rectangular" height={400} />
+    <Skeleton variant="text" height={80} sx={{ mt: 2 }} />
+    <Skeleton variant="text" height={30} width="60%" />
+    <Skeleton variant="rectangular" height={200} sx={{ mt: 4 }} />
+  </Box>
+);
+
+const ErrorState = ({ error, onBack }) => (
+  <Container maxWidth="md" sx={{ mt: 12, textAlign: 'center', direction: 'rtl' }}>
+    <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>
+    <Button 
+      variant="contained" 
+      endIcon={<ArrowBackIcon />}
+      onClick={onBack}
+    >
+      חזרה לסיפורים
+    </Button>
+  </Container>
+);
+
+// ==========================================
+// Main Component
+// ==========================================
 
 const StoryPage = () => {
   const { id } = useParams();
@@ -27,78 +211,62 @@ const StoryPage = () => {
   const [relatedStories, setRelatedStories] = useState([]);
 
   useEffect(() => {
-    // Fetch directly from JSON
-    const fetchStoryData = async () => {
+    const loadStory = () => {
       try {
         setLoading(true);
         setError(null);
         
-        // Get all stories from JSON file
-        const response = await fetch('/data/stories.json');
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch stories');
-        }
-        
-        const data = await response.json();
-        const stories = data.stories || [];
-        
-        // Find the story with matching ID
+        const stories = storiesData.stories || [];
         const storyData = stories.find(s => s.id === parseInt(id));
         
-        if (!storyData) {
-          throw new Error('Story not found');
-        }
+        if (!storyData) throw new Error('Story not found');
         
         setStory(storyData);
         
-        // Find related stories (those that share tags with the current story)
         const related = stories
-          .filter(s => s.id !== parseInt(id)) // Exclude current story
-          .filter(s => s.tags.some(tag => storyData.tags.includes(tag))) // Must share at least one tag
-          .slice(0, 3); // Limit to 3 stories
+          .filter(s => s.id !== parseInt(id))
+          .filter(s => s.tags.some(tag => storyData.tags.includes(tag)))
+          .slice(0, 3);
         
         setRelatedStories(related);
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching story:", err);
+        console.error("Error loading story:", err);
         setError("לא ניתן לטעון את הסיפור הזה. ייתכן שהוא הוסר או אינו זמין באופן זמני.");
         setLoading(false);
       }
     };
 
-    fetchStoryData();
-    // Scroll to top when component mounts or ID changes
+    loadStory();
     window.scrollTo(0, 0);
   }, [id]);
 
-  if (error) {
-    return (
-      <Container maxWidth="md" sx={{ mt: 12, textAlign: 'center' }}>
-        <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>
-        <Button 
-          variant="contained" 
-          startIcon={<ArrowBackIcon />} 
-          onClick={() => navigate(-1)}
-        >
-          חזרה
-        </Button>
-      </Container>
-    );
-  }
+  const handleBackToStories = () => {
+    navigate('/');
+    
+    // Photos are now cached, so we can use a shorter delay
+    setTimeout(() => {
+      const element = document.getElementById('stories');
+      if (element) {
+        const headerHeight = 64;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = window.pageYOffset + elementPosition - headerHeight;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        });
+      }
+    }, 200);
+  };
+
+  if (error) return <ErrorState error={error} onBack={handleBackToStories} />;
 
   return (
-    <Box 
-      component="main"
-      sx={{ 
-        minHeight: '100vh',
-        py: 4,
-      }}
-    >
+    <Box component="main" sx={{ minHeight: '100vh', py: 4, direction: 'rtl' }}>
       <Container maxWidth="md">
-        {/* Back Button */}
         <IconButton 
-          onClick={() => navigate(-1)} 
+          onClick={handleBackToStories} 
           sx={{ mb: 2 }}
           aria-label="back"
         >
@@ -106,13 +274,7 @@ const StoryPage = () => {
         </IconButton>
 
         {loading ? (
-          // Loading skeleton
-          <Box sx={{ mt: 4 }}>
-            <Skeleton variant="rectangular" height={400} />
-            <Skeleton variant="text" height={80} sx={{ mt: 2 }} />
-            <Skeleton variant="text" height={30} width="60%" />
-            <Skeleton variant="rectangular" height={200} sx={{ mt: 4 }} />
-          </Box>
+          <LoadingSkeleton />
         ) : (
           <Fade in={!loading}>
             <Paper 
@@ -120,10 +282,10 @@ const StoryPage = () => {
               sx={{ 
                 p: { xs: 2, md: 4 },
                 borderRadius: 2,
-                overflow: 'hidden'
+                overflow: 'hidden',
+                direction: 'rtl'
               }}
             >
-              {/* Hero Image */}
               <Box
                 component="img"
                 src={story?.image}
@@ -137,148 +299,28 @@ const StoryPage = () => {
                 }}
               />
 
-              {/* Title and Meta */}
-              <Typography variant="h2" component="h1" gutterBottom>
-                {story?.title}
-              </Typography>
+              <StoryHeader 
+                title={story?.title}
+                author={story?.author}
+                date={story?.date}
+                location={story?.location}
+              />
 
-              <Box sx={{ display: 'flex', gap: 2, mb: 4, flexWrap: 'wrap' }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <PersonIcon color="action" />
-                  <Typography variant="subtitle1" color="text.secondary">
-                    {story?.author}
-                  </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <CalendarTodayIcon color="action" />
-                  <Typography variant="subtitle1" color="text.secondary">
-                    {new Date(story?.date).toLocaleDateString('he-IL')}
-                  </Typography>
-                </Box>
-                {story?.location && (
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <LocationOnIcon color="action" />
-                    <Typography variant="subtitle1" color="text.secondary">
-                      {story?.location}
-                    </Typography>
-                  </Box>
-                )}
-              </Box>
-
-              {/* Tags */}
-              <Box sx={{ mb: 4 }}>
-                {story?.tags.map((tag) => (
-                  <Chip
-                    key={tag}
-                    label={tag}
-                    sx={{ mr: 1, mb: 1 }}
-                    size="small"
-                  />
-                ))}
-              </Box>
-
+              <StoryTags tags={story?.tags} />
+              
               <Divider sx={{ mb: 4 }} />
-
-              {/* Content - preserve line breaks */}
-              <Typography variant="body1" paragraph sx={{ 
-                lineHeight: 1.8, 
-                fontSize: '1.1rem', 
-                whiteSpace: 'pre-line'  // This preserves line breaks in the content
-              }}>
-                {story?.content}
-              </Typography>
-
-              {/* Additional Images */}
-              {story?.additionalImages && story.additionalImages.length > 0 && (
-                <Box sx={{ mt: 4 }}>
-                  <Typography variant="h6" gutterBottom>
-                    תמונות נוספות
-                  </Typography>
-                  <Box 
-                    sx={{ 
-                      display: 'grid',
-                      gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
-                      gap: 2 
-                    }}
-                  >
-                    {story.additionalImages.map((img, index) => (
-                      <Box
-                        key={index}
-                        component="img"
-                        src={img}
-                        alt={`תמונה נוספת ${index + 1}`}
-                        sx={{
-                          width: '100%',
-                          height: '300px',
-                          objectFit: 'cover',
-                          borderRadius: 1,
-                        }}
-                      />
-                    ))}
-                  </Box>
-                </Box>
-              )}
-
-              {/* Related Stories */}
-              {relatedStories.length > 0 && (
-                <Box sx={{ mt: 6 }}>
-                  <Divider sx={{ mb: 4 }} />
-                  <Typography variant="h5" gutterBottom>
-                    סיפורים קשורים
-                  </Typography>
-                  <Box 
-                    sx={{ 
-                      display: 'grid',
-                      gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr' },
-                      gap: 3
-                    }}
-                  >
-                    {relatedStories.map((relatedStory) => (
-                      <Paper 
-                        key={relatedStory.id}
-                        elevation={2}
-                        sx={{ 
-                          borderRadius: 2,
-                          overflow: 'hidden',
-                          transition: 'transform 0.2s, box-shadow 0.2s',
-                          '&:hover': {
-                            transform: 'translateY(-4px)',
-                            boxShadow: 6
-                          },
-                          cursor: 'pointer'
-                        }}
-                        onClick={() => {
-                          navigate(`/story/${relatedStory.id}`);
-                          // Scroll to top when navigating to a new story
-                          window.scrollTo(0, 0);
-                        }}
-                      >
-                        <Box
-                          component="img"
-                          src={relatedStory.image}
-                          alt={relatedStory.title}
-                          sx={{
-                            width: '100%',
-                            height: '160px',
-                            objectFit: 'cover'
-                          }}
-                        />
-                        <Box sx={{ p: 2 }}>
-                          <Typography variant="h6" gutterBottom>
-                            {relatedStory.title}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                            מאת {relatedStory.author}
-                          </Typography>
-                          <Typography variant="body2" noWrap>
-                            {relatedStory.preview}
-                          </Typography>
-                        </Box>
-                      </Paper>
-                    ))}
-                  </Box>
-                </Box>
-              )}
+              
+              <StoryContent content={story?.content} />
+              
+              <AdditionalImages images={story?.additionalImages} />
+              
+              <RelatedStories 
+                stories={relatedStories} 
+                onNavigate={(id) => {
+                  navigate(`/story/${id}`);
+                  window.scrollTo(0, 0);
+                }}
+              />
             </Paper>
           </Fade>
         )}

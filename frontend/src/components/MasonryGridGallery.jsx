@@ -23,16 +23,39 @@ const staticImages = [
   [pic10, pic11, pic12],
 ];
 
+// Cache for photos to avoid refetching on remount
+let photosCache = null;
+let isLoading = false;
+const loadingPromise = { current: null };
+
 export function MasonryGridGallery() {
-  const [photos, setPhotos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [photos, setPhotos] = useState(photosCache || []);
+  const [loading, setLoading] = useState(!photosCache);
   const [error, setError] = useState(null);
   
   useEffect(() => {
+    // If we already have cached photos, use them immediately
+    if (photosCache) {
+      setPhotos(photosCache);
+      setLoading(false);
+      return;
+    }
+    
+    // If already loading, wait for that promise
+    if (isLoading && loadingPromise.current) {
+      loadingPromise.current.then(() => {
+        if (photosCache) {
+          setPhotos(photosCache);
+          setLoading(false);
+        }
+      });
+      return;
+    }
+    
+    isLoading = true;
+    
     const fetchPhotos = async () => {
       try {
-        // No need to check for sign-in or initialize - App.jsx handles initialization
-        // Just fetch photos directly
         const photoData = await googleDriveService.getPhotos();
         
         // Take only the first 12 photos for the grid
@@ -44,16 +67,18 @@ export function MasonryGridGallery() {
           columns[index % 4].push(photo);
         });
         
+        photosCache = columns;
         setPhotos(columns);
       } catch (err) {
         console.error('Error fetching photos for home grid:', err);
         setError('Could not load photos');
       } finally {
         setLoading(false);
+        isLoading = false;
       }
     };
     
-    fetchPhotos();
+    loadingPromise.current = fetchPhotos();
   }, []);
   
   if (loading) {

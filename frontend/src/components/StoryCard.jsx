@@ -10,9 +10,11 @@ const StoryCard = ({ story }) => {
     <Card 
       sx={{ 
         height: '100%',
+        minHeight: '450px',
         display: 'flex',
         flexDirection: 'column',
         transition: 'transform 0.2s',
+        direction: 'rtl',
         '&:hover': {
           transform: 'translateY(-4px)',
         },
@@ -24,18 +26,18 @@ const StoryCard = ({ story }) => {
         image={story.image}
         alt={story.title}
       />
-      <CardContent sx={{ flexGrow: 1 }}>
-        <Typography gutterBottom variant="h5" component="h3">
+      <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+        <Typography gutterBottom variant="h5" component="h3" sx={{ textAlign: 'right' }}>
           {story.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary" paragraph>
+        <Typography variant="body2" color="text.secondary" paragraph sx={{ textAlign: 'right' }}>
           {story.preview}
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-          <PersonIcon sx={{ fontSize: 20, mr: 1 }} color="action" />
-          <Typography variant="subtitle2" color="text.secondary">
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, justifyContent: 'flex-end' }}>
+          <Typography variant="subtitle2" color="text.secondary" sx={{ mr: 1 }}>
             {story.author}
           </Typography>
+          <PersonIcon sx={{ fontSize: 20 }} color="action" />
         </Box>
         <Button 
           variant="contained" 
@@ -43,7 +45,7 @@ const StoryCard = ({ story }) => {
           fullWidth
           sx={{ mt: 'auto' }}
         >
-          Read More
+          קרא עוד
         </Button>
       </CardContent>
     </Card>

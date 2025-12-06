@@ -13,6 +13,8 @@ import {
 import { useTheme } from '@mui/material/styles';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import MenuIcon from '@mui/icons-material/Menu';
+import ShareIcon from '@mui/icons-material/Share';
+import ShareStoryModal from './ShareStoryModal';
 
 // ==========================================
 // Constants
@@ -30,7 +32,7 @@ const NAVIGATION_ITEMS = [
 // Sub-components
 // ==========================================
 
-const MobileNavigation = ({ navigation, trigger }) => {
+const MobileNavigation = ({ navigation, trigger, onShareClick }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleOpenMenu = (event) => {
@@ -39,6 +41,11 @@ const MobileNavigation = ({ navigation, trigger }) => {
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
+  };
+
+  const handleShareClick = () => {
+    handleCloseMenu();
+    onShareClick();
   };
 
   const scrollToSection = (sectionId) => {
@@ -95,6 +102,21 @@ const MobileNavigation = ({ navigation, trigger }) => {
               <Typography textAlign="center">{item.name}</Typography>
             </MenuItem>
           ))}
+          <MenuItem 
+            onClick={handleShareClick}
+            sx={{
+              borderTop: 1,
+              borderColor: 'divider',
+              mt: 1,
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: '100%', justifyContent: 'center' }}>
+              <ShareIcon fontSize="small" />
+              <Typography textAlign="center" sx={{ fontWeight: 600 }}>
+                שתף את הסיפור שלך
+              </Typography>
+            </Box>
+          </MenuItem>
         </Menu>
       </Box>
 
@@ -118,7 +140,7 @@ const MobileNavigation = ({ navigation, trigger }) => {
   );
 };
 
-const DesktopNavigation = ({ navigation, activeSection, trigger }) => {
+const DesktopNavigation = ({ navigation, activeSection, trigger, onShareClick }) => {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -180,6 +202,28 @@ const DesktopNavigation = ({ navigation, activeSection, trigger }) => {
         ))}
       </Box>
 
+      {/* Share Story Button */}
+      <Button
+        variant="contained"
+        onClick={onShareClick}
+        startIcon={<ShareIcon />}
+        sx={{
+          display: { xs: 'none', md: 'flex' },
+          mx: 2,
+          bgcolor: trigger ? 'primary.main' : 'rgba(255, 255, 255, 0.9)',
+          color: trigger ? 'white' : 'primary.main',
+          fontWeight: 600,
+          '&:hover': {
+            bgcolor: trigger ? 'primary.dark' : 'rgba(255, 255, 255, 1)',
+            transform: 'translateY(-2px)',
+          },
+          transition: 'all 0.2s ease-in-out',
+          boxShadow: 2,
+        }}
+      >
+        שתף את הסיפור שלך
+      </Button>
+
       {/* Desktop Title */}
       <Typography
         variant="h6"
@@ -208,6 +252,15 @@ const HomePageHeader = () => {
     threshold: 100,
   });
   const [activeSection, setActiveSection] = useState('welcome');
+  const [shareModalOpen, setShareModalOpen] = useState(false);
+
+  const handleOpenShareModal = () => {
+    setShareModalOpen(true);
+  };
+
+  const handleCloseShareModal = () => {
+    setShareModalOpen(false);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -231,30 +284,40 @@ const HomePageHeader = () => {
   }, []);
 
   return (
-    <AppBar 
-      position="fixed"
-      sx={{
-        background: trigger ? theme.palette.background.default : 'transparent',
-        boxShadow: trigger ? 1 : 'none',
-        transition: 'all 0.3s ease-in-out',
-        backdropFilter: trigger ? 'blur(8px)' : 'none',
-        backgroundColor: trigger ? 'rgba(255, 255, 255, 0.95)' : 'transparent',
-      }}
-    >
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <DesktopNavigation 
-            navigation={NAVIGATION_ITEMS}
-            activeSection={activeSection}
-            trigger={trigger}
-          />
-          <MobileNavigation 
-            navigation={NAVIGATION_ITEMS}
-            trigger={trigger}
-          />
-        </Toolbar>
-      </Container>
-    </AppBar>
+    <>
+      <AppBar 
+        position="fixed"
+        sx={{
+          background: trigger ? theme.palette.background.default : 'transparent',
+          boxShadow: trigger ? 1 : 'none',
+          transition: 'all 0.3s ease-in-out',
+          backdropFilter: trigger ? 'blur(8px)' : 'none',
+          backgroundColor: trigger ? 'rgba(255, 255, 255, 0.95)' : 'transparent',
+        }}
+      >
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <DesktopNavigation 
+              navigation={NAVIGATION_ITEMS}
+              activeSection={activeSection}
+              trigger={trigger}
+              onShareClick={handleOpenShareModal}
+            />
+            <MobileNavigation 
+              navigation={NAVIGATION_ITEMS}
+              trigger={trigger}
+              onShareClick={handleOpenShareModal}
+            />
+          </Toolbar>
+        </Container>
+      </AppBar>
+
+      {/* Share Story Modal */}
+      <ShareStoryModal 
+        open={shareModalOpen}
+        onClose={handleCloseShareModal}
+      />
+    </>
   );
 };
 
