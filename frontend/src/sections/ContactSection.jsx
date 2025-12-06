@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Box, Container, Typography, TextField, Button, Alert, Grid } from '@mui/material';
-import emailjs from 'emailjs-com';
+import { sendContactMessage } from '../services/emailService';
 
 const ContactSection = () => {
   const [status, setStatus] = useState('');
@@ -13,17 +13,13 @@ const ContactSection = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setStatus('sending');
     try {
-      // TODO: Replace with your EmailJS service details
-      await emailjs.send(
-        'YOUR_SERVICE_ID',
-        'YOUR_TEMPLATE_ID',
-        formData,
-        'YOUR_USER_ID'
-      );
+      await sendContactMessage(formData);
       setStatus('success');
       setFormData({ name: '', email: '', message: '', itemRequest: '' });
     } catch (error) {
+      console.error('Failed to send message:', error);
       setStatus('error');
     }
   };
@@ -111,8 +107,9 @@ const ContactSection = () => {
                 variant="contained"
                 size="large"
                 fullWidth
+                disabled={status === 'sending'}
               >
-                שלח הודעה
+                {status === 'sending' ? 'שולח...' : 'שלח הודעה'}
               </Button>
             </Grid>
           </Grid>

@@ -118,6 +118,54 @@ export const sendStorySubmission = async (formData, photos = []) => {
 };
 
 /**
+ * Send contact form message via EmailJS
+ * @param {Object} formData - Contact form data { name, email, message, itemRequest }
+ * @returns {Promise} - EmailJS send promise
+ */
+export const sendContactMessage = async (formData) => {
+  try {
+    // Initialize EmailJS
+    initEmailJS();
+
+    const serviceId = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+    // Use specific contact template ID
+    const templateId = process.env.REACT_APP_EMAILJS_CONTACT_TEMPLATE_ID;
+
+    if (!serviceId || !templateId) {
+      throw new Error('EmailJS configuration is missing');
+    }
+
+    // Template parameters for the contact form
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      item_request: formData.itemRequest || 'לא צוין',
+      message: formData.message,
+      submission_date: new Date().toLocaleString('he-IL', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+      recipient_email: process.env.REACT_APP_RECIPIENT_EMAIL || 'eyalsegev123@gmail.com',
+    };
+
+    // Send email via EmailJS
+    const response = await emailjs.send(
+      serviceId,
+      templateId,
+      templateParams
+    );
+
+    return response;
+  } catch (error) {
+    console.error('Error sending contact message:', error);
+    throw error;
+  }
+};
+
+/**
  * Validate form data before submission
  * @param {Object} formData - Form data to validate
  * @returns {Object} - { isValid: boolean, errors: object }
