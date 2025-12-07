@@ -177,25 +177,28 @@ const DesktopNavigation = ({ navigation, activeSection, trigger, onShareClick })
           <Button
             key={item.name}
             onClick={() => scrollToSection(item.href)}
+            size="small" // Smaller button size
             sx={{
-              my: 2,
+              my: 0, // Removed vertical margin entirely
               mx: 1,
+              py: 0.5, // Reduced internal padding
               color: trigger ? 'text.primary' : 'white',
               display: 'block',
               transition: 'all 0.2s ease-in-out',
               position: 'relative',
-              fontWeight: 600, // Added for better visibility
-              textShadow: trigger ? 'none' : '0 2px 4px rgba(0,0,0,0.6)', // Added text shadow
+              fontWeight: 600,
+              fontSize: '0.95rem',
+              textShadow: trigger ? 'none' : '0 2px 4px rgba(0,0,0,0.6)',
               '&:after': {
                 content: '""',
                 position: 'absolute',
-                bottom: '0',
+                bottom: '2px', // Adjusted underline position
                 left: '0',
                 width: activeSection === item.href ? '100%' : '0%',
                 height: '2px',
                 backgroundColor: trigger ? 'primary.main' : 'white',
                 transition: 'width 0.3s ease-in-out',
-                boxShadow: trigger ? 'none' : '0 2px 4px rgba(0,0,0,0.6)', // Shadow for underline too
+                boxShadow: trigger ? 'none' : '0 2px 4px rgba(0,0,0,0.6)',
               },
               '&:hover': {
                 backgroundColor: trigger 
@@ -216,14 +219,17 @@ const DesktopNavigation = ({ navigation, activeSection, trigger, onShareClick })
       {/* Share Story Button */}
       <Button
         variant="contained"
+        size="small" // Reduced size
         onClick={onShareClick}
         startIcon={<ShareIcon />}
         sx={{
           display: { xs: 'none', md: 'flex' },
           mx: 2,
+          py: 0.5, // Reduced padding
           bgcolor: trigger ? 'primary.main' : 'rgba(255, 255, 255, 0.9)',
           color: trigger ? 'white' : 'primary.main',
           fontWeight: 600,
+          fontSize: '0.9rem', // Slightly smaller text
           '&:hover': {
             bgcolor: trigger ? 'primary.dark' : 'rgba(255, 255, 255, 1)',
             transform: 'translateY(-2px)',
@@ -315,8 +321,8 @@ const HomePageHeader = () => {
           backgroundColor: trigger ? 'rgba(255, 255, 255, 0.95)' : 'transparent',
         }}
       >
-        <Container maxWidth="xl">
-          <Toolbar disableGutters sx={{ direction: 'rtl' }}>
+        <Container maxWidth={false}> {/* Full width container */}
+          <Toolbar disableGutters variant="dense" sx={{ direction: 'rtl', minHeight: { xs: 48, md: 50 }, px: { xs: 2, md: 4 } }}>
             <DesktopNavigation 
               navigation={NAVIGATION_ITEMS}
               activeSection={activeSection}

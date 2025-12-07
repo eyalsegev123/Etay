@@ -56,7 +56,7 @@ export function MasonryGridGallery() {
     
     const fetchPhotos = async () => {
       try {
-        const photoData = await googleDriveService.getPhotos();
+        const { photos: photoData } = await googleDriveService.getPhotos(12);
         
         // Take only the first 12 photos for the grid
         const limitedPhotos = photoData.slice(0, 12);

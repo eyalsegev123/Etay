@@ -1,6 +1,6 @@
 import { Box, Typography, keyframes } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import azulPic from '../assets/etaypic-azul.JPG';
+import welcomePic from '../assets/boat_photo_etay_better_asspect_ratio.jpeg';
 
 // Animation for the background zoom (Ken Burns effect)
 const kenBurns = keyframes`
@@ -38,9 +38,9 @@ const WelcomeSection = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundImage: `url(${azulPic})`,
+          backgroundImage: `url(${welcomePic})`,
           backgroundSize: 'cover',
-          backgroundPosition: '50% 30%',
+          backgroundPosition: '50% 20%', // Adjusted for standing portrait to show face/upper body
           animation: `${kenBurns} 20s ease-out infinite alternate`,
           zIndex: 0,
         }}

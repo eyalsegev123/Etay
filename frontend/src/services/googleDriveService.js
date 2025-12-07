@@ -69,25 +69,32 @@ const initClient = async () => {
 
 // Simple service object with core functionality
 const googleDriveService = {
-  // Get all photos from the specified folder
-  getPhotos: async () => {
+  // Get all photos from the specified folder with pagination support
+  getPhotos: async (pageSize = 100, pageToken = null) => {
     try {
       ensureConfig();
       await initClient();
       
       // Make sure the photos folder is publicly accessible or shared with anyone with the link
       // Get images from the folder
-      const response = await window.gapi.client.drive.files.list({
+      const params = {
         q: `'${PHOTOS_FOLDER_ID}' in parents and mimeType contains 'image/' and trashed=false`,
-        fields: 'files(id, name, thumbnailLink, createdTime)',
+        fields: 'nextPageToken, files(id, name, thumbnailLink, createdTime)',
         orderBy: 'createdTime desc',
-        pageSize: 100
-      });
+        pageSize: pageSize
+      };
+      
+      if (pageToken) {
+        params.pageToken = pageToken;
+      }
+      
+      const response = await window.gapi.client.drive.files.list(params);
       
       const files = response.result.files || [];
+      const nextPageToken = response.result.nextPageToken || null;
       
       // Transform into simple photo objects
-      return files.map(file => ({
+      const photos = files.map(file => ({
         id: file.id,
         src: `https://drive.google.com/uc?export=view&id=${file.id}`,
         thumbnailSrc: file.thumbnailLink,
@@ -96,12 +103,48 @@ const googleDriveService = {
         dateCreated: file.createdTime
       }));
       
+      return { photos, nextPageToken };
+      
     } catch (error) {
       console.error("Error fetching photos:", error);
-      return []; // Return empty array on error for resilience
+      return { photos: [], nextPageToken: null }; // Return empty on error
     }
   },
   
+  // Get total count of photos in the folder (optimized query)
+  getPhotoCount: async () => {
+    try {
+      ensureConfig();
+      await initClient();
+      
+      let total = 0;
+      let pageToken = null;
+      
+      do {
+        const params = {
+          q: `'${PHOTOS_FOLDER_ID}' in parents and mimeType contains 'image/' and trashed=false`,
+          fields: 'nextPageToken, files(id)', // Only fetch IDs to minimize data transfer
+          pageSize: 1000 // Max page size for faster counting
+        };
+        
+        if (pageToken) {
+          params.pageToken = pageToken;
+        }
+        
+        const response = await window.gapi.client.drive.files.list(params);
+        const files = response.result.files || [];
+        total += files.length;
+        
+        pageToken = response.result.nextPageToken;
+      } while (pageToken);
+      
+      return total;
+    } catch (error) {
+      console.error("Error counting photos:", error);
+      return 0;
+    }
+  },
+
   // Get a single photo by ID
   getPhotoById: async (id) => {
     try {
