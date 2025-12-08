@@ -6,6 +6,8 @@ import theme from "./theme";
 import HomePage from "./pages/HomePage";
 import StoryPage from "./pages/StoryPage";
 import PhotosPage from "./pages/PhotosPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import ErrorBoundary from "./components/ErrorBoundary";
 import googleDriveService from "./services/googleDriveService";
 import "./styles/App.css";
 
@@ -32,6 +34,8 @@ const AppContent = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/story/:id" element={<StoryPage />} />
         <Route path="/photos" element={<PhotosPage />} />
+        {/* Catch-all route for 404 - must be last */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>
   );
@@ -39,12 +43,14 @@ const AppContent = () => {
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Router>
-        <AppContent />
-      </Router>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+          <AppContent />
+        </Router>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
 

@@ -10,7 +10,6 @@ import {
   Menu, 
   MenuItem 
 } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShareIcon from '@mui/icons-material/Share';
@@ -306,7 +305,6 @@ const DesktopNavigation = ({ navigation, activeSection, trigger, onShareClick })
 // ==========================================
 
 const HomePageHeader = () => {
-  const theme = useTheme();
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 100,
