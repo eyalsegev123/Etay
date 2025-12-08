@@ -112,7 +112,7 @@ const StoryCard = ({ story }) => {
               width: 32,
               height: 32,
               borderRadius: '50%',
-              bgcolor: 'rgba(232, 90, 79, 0.1)',
+              bgcolor: 'rgba(59, 130, 246, 0.1)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

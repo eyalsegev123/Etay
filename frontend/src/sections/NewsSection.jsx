@@ -21,7 +21,7 @@ const NewsSection = () => {
         overflow: 'hidden',
       }}
     >
-      {/* Subtle background decoration - coral tinted */}
+      {/* Subtle background decoration - blue tinted */}
       <Box
         sx={{
           position: 'absolute',
@@ -30,7 +30,7 @@ const NewsSection = () => {
           width: '300px',
           height: '300px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(232, 90, 79, 0.04) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(59, 130, 246, 0.04) 0%, transparent 70%)',
           pointerEvents: 'none',
         }}
       />
@@ -42,7 +42,7 @@ const NewsSection = () => {
           width: '400px',
           height: '400px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(232, 90, 79, 0.04) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(59, 130, 246, 0.04) 0%, transparent 70%)',
           pointerEvents: 'none',
         }}
       />

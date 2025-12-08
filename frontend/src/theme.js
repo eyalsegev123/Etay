@@ -6,9 +6,9 @@ import { createTheme } from '@mui/material/styles';
 
 const palette = {
   primary: {
-    main: '#E85A4F',
-    light: '#FF7B6F',
-    dark: '#C74840',
+    main: '#3B82F6',
+    light: '#60A5FA',
+    dark: '#2563EB',
     contrastText: '#FFFFFF',
   },
   secondary: {
@@ -133,31 +133,31 @@ const components = {
         transition: 'all 0.2s ease-in-out',
         boxShadow: 'none',
         '&:hover': {
-          boxShadow: '0 4px 12px rgba(232, 90, 79, 0.25)',
+          boxShadow: '0 4px 12px rgba(59, 130, 246, 0.25)',
           transform: 'translateY(-1px)',
         },
       },
       contained: {
         '&:hover': {
-          boxShadow: '0 6px 20px rgba(232, 90, 79, 0.3)',
+          boxShadow: '0 6px 20px rgba(59, 130, 246, 0.3)',
         },
       },
       containedPrimary: {
-        background: 'linear-gradient(135deg, #E85A4F 0%, #FF7B6F 100%)',
+        background: 'linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%)',
         '&:hover': {
-          background: 'linear-gradient(135deg, #C74840 0%, #E85A4F 100%)',
+          background: 'linear-gradient(135deg, #2563EB 0%, #3B82F6 100%)',
         },
       },
       outlined: {
         borderWidth: 2,
         '&:hover': {
           borderWidth: 2,
-          backgroundColor: 'rgba(232, 90, 79, 0.04)',
+          backgroundColor: 'rgba(59, 130, 246, 0.04)',
         },
       },
       text: {
         '&:hover': {
-          backgroundColor: 'rgba(232, 90, 79, 0.08)',
+          backgroundColor: 'rgba(59, 130, 246, 0.08)',
         },
       },
     },
@@ -255,10 +255,10 @@ const components = {
         },
       },
       standardError: {
-        backgroundColor: 'rgba(232, 90, 79, 0.1)',
-        color: '#C74840',
+        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+        color: '#DC2626',
         '& .MuiAlert-icon': {
-          color: palette.primary.main,
+          color: '#EF4444',
         },
       },
     },

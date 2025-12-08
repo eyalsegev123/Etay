@@ -227,7 +227,7 @@ const DesktopNavigation = ({ navigation, activeSection, trigger, onShareClick })
               },
               '&:hover': {
                 backgroundColor: trigger 
-                  ? 'rgba(232, 90, 79, 0.08)'
+                  ? 'rgba(59, 130, 246, 0.08)'
                   : 'rgba(255, 255, 255, 0.1)',
                 '&:after': {
                   width: '100%',
@@ -253,19 +253,19 @@ const DesktopNavigation = ({ navigation, activeSection, trigger, onShareClick })
           px: 2.5,
           // Use 'background' to override the theme's gradient
           background: trigger 
-            ? 'linear-gradient(135deg, #E85A4F 0%, #FF7B6F 100%)' 
+            ? 'linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%)' 
             : 'rgba(255, 255, 255, 0.95)',
-          color: trigger ? 'white' : '#E85A4F',
+          color: trigger ? 'white' : '#3B82F6',
           fontWeight: 600,
           fontSize: '0.9rem',
           borderRadius: 25,
           '&:hover': {
             background: trigger 
-              ? 'linear-gradient(135deg, #C74840 0%, #E85A4F 100%)' 
+              ? 'linear-gradient(135deg, #2563EB 0%, #3B82F6 100%)' 
               : 'rgba(255, 255, 255, 1)',
             transform: 'translateY(-2px)',
             boxShadow: trigger 
-              ? '0 4px 12px rgba(232, 90, 79, 0.3)' 
+              ? '0 4px 12px rgba(59, 130, 246, 0.3)' 
               : '0 4px 12px rgba(0,0,0,0.15)',
           },
           transition: 'all 0.2s ease-in-out',

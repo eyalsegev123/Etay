@@ -49,7 +49,7 @@ const TimelineSection = () => {
           מסע החיים של איתי
         </Typography>
 
-        <VerticalTimeline lineColor="rgba(232, 90, 79, 0.2)">
+        <VerticalTimeline lineColor="rgba(59, 130, 246, 0.2)">
           {events.map((event) => (
             <VerticalTimelineElement
               key={event.id}
@@ -66,9 +66,9 @@ const TimelineSection = () => {
               contentArrowStyle={{ borderRight: "7px solid #FFFFFF" }}
               date={event.date}
               iconStyle={{ 
-                background: "linear-gradient(135deg, #E85A4F 0%, #FF7B6F 100%)", 
+                background: "linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%)", 
                 color: "#fff",
-                boxShadow: '0 4px 12px rgba(232, 90, 79, 0.3)',
+                boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
               }}
               icon={iconMap[event.icon] || <SchoolIcon />}
             >

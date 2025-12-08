@@ -117,11 +117,11 @@ const NewsCard = ({ news, index }) => {
           p: 2.5,
         }}
       >
-        {/* Channel Name Badge - Coral */}
+        {/* Channel Name Badge - Blue */}
         <Box
           sx={{
             alignSelf: 'flex-start',
-            background: 'linear-gradient(135deg, #E85A4F 0%, #FF7B6F 100%)',
+            background: 'linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%)',
             color: 'white',
             px: 1.5,
             py: 0.5,

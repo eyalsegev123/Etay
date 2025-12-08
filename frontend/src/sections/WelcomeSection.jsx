@@ -123,10 +123,10 @@ const WelcomeSection = () => {
           sx={{
             width: '60px',
             height: '3px',
-            background: 'linear-gradient(90deg, #E85A4F, #FF7B6F)',
+            background: 'linear-gradient(90deg, #3B82F6, #60A5FA)',
             mx: 'auto',
             borderRadius: '2px',
-            boxShadow: '0 2px 8px rgba(232, 90, 79, 0.4)',
+            boxShadow: '0 2px 8px rgba(59, 130, 246, 0.4)',
           }}
         />
       </Box>
