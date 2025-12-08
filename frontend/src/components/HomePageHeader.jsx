@@ -25,6 +25,7 @@ const NAVIGATION_ITEMS = [
   { name: 'ציר זמן', href: 'timeline' },
   { name: 'תמונות', href: 'photos' },
   { name: 'סיפורים', href: 'stories' },
+  { name: 'בתקשורת', href: 'news' },
   { name: 'צור קשר', href: 'contact' },
 ];
 

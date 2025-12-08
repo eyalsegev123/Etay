@@ -3,6 +3,7 @@ import WelcomeSection from '../sections/WelcomeSection';
 import TimelineSection from '../sections/TimelineSection';
 import PhotosSection from '../sections/PhotosSection';
 import StoriesSection from '../sections/StoriesSection';
+import NewsSection from '../sections/NewsSection';
 import ContactSection from '../sections/ContactSection';
 import HomePageHeader from '../components/HomePageHeader';
 
@@ -14,6 +15,7 @@ const HomePage = () => {
       <TimelineSection />
       <PhotosSection />
       <StoriesSection />
+      <NewsSection />
       <ContactSection />
     </Box>
   );

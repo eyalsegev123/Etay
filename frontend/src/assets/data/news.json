@@ -1,0 +1,58 @@
+{
+  "news": [
+    {
+      "id": 1,
+      "channelName": "חדשות 12",
+      "title": "גיבורי ישראל: סיפורו של איתי אזולאי",
+      "description": "כתבה מיוחדת על מסע חייו של איתי, מילדות בחיפה ועד לשירותו המסור ביחידה המובחרת...",
+      "logoUrl": "https://upload.wikimedia.org/wikipedia/he/thumb/c/c5/Channel_12_Logo_2018.svg/200px-Channel_12_Logo_2018.svg.png",
+      "articleUrl": "#",
+      "date": "2024-11-15"
+    },
+    {
+      "id": 2,
+      "channelName": "ynet",
+      "title": "המפקד שדאג לכולם: חבריו של איתי מספרים",
+      "description": "ראיונות מרגשים עם חברי היחידה שמספרים על המנהיג והחבר שאיבדו...",
+      "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Ynet_website_logo.svg/200px-Ynet_website_logo.svg.png",
+      "articleUrl": "#",
+      "date": "2024-11-12"
+    },
+    {
+      "id": 3,
+      "channelName": "כאן 11",
+      "title": "לזכרו של איתי: המורשת שנותרה",
+      "description": "תיעוד מיוחד על פרויקטים קהילתיים שהוקמו לזכרו של איתי אזולאי...",
+      "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Kan_11_logo.svg/200px-Kan_11_logo.svg.png",
+      "articleUrl": "#",
+      "date": "2024-11-08"
+    },
+    {
+      "id": 4,
+      "channelName": "מעריב",
+      "title": "האח הגדול: משפחתו של איתי פותחת את ליבה",
+      "description": "שיחה אישית עם משפחת אזולאי על הבן, האח והחבר שהיה איתי...",
+      "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Maariv_Logo.svg/200px-Maariv_Logo.svg.png",
+      "articleUrl": "#",
+      "date": "2024-11-05"
+    },
+    {
+      "id": 5,
+      "channelName": "וואלה! חדשות",
+      "title": "דור של גיבורים: איתי אזולאי ז״ל",
+      "description": "פרופיל מעמיק על איתי, חייו, חלומותיו והמורשת שהשאיר אחריו...",
+      "logoUrl": "https://upload.wikimedia.org/wikipedia/he/thumb/4/4f/Walla%21_Logo.svg/200px-Walla%21_Logo.svg.png",
+      "articleUrl": "#",
+      "date": "2024-10-30"
+    },
+    {
+      "id": 6,
+      "channelName": "הארץ",
+      "title": "סיפור אהבה ומסירות: זוכרים את איתי",
+      "description": "כתבה מרגשת על האהבה הגדולה של איתי למשפחתו, לחבריו ולארץ...",
+      "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Haaretz-logo-hebrew.svg/200px-Haaretz-logo-hebrew.svg.png",
+      "articleUrl": "#",
+      "date": "2024-10-25"
+    }
+  ]
+}
