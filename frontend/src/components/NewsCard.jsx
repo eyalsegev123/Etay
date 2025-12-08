@@ -38,14 +38,15 @@ const NewsCard = ({ news, index }) => {
         cursor: 'pointer',
         position: 'relative',
         overflow: 'visible',
-        borderRadius: 3,
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+        borderRadius: 4,
+        bgcolor: 'background.paper',
+        boxShadow: '0 2px 12px rgba(0, 0, 0, 0.06)',
         transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
         animation: `${float} ${4 + index * 0.5}s ease-in-out infinite`,
         animationDelay: `${index * 0.3}s`,
         '&:hover': {
-          transform: 'translateY(-12px) scale(1.02)',
-          boxShadow: '0 20px 40px rgba(0, 0, 0, 0.15)',
+          transform: 'translateY(-10px) scale(1.02)',
+          boxShadow: '0 16px 40px rgba(0, 0, 0, 0.12)',
           '& .external-icon': {
             opacity: 1,
             transform: 'translate(-4px, 4px)',
@@ -73,7 +74,7 @@ const NewsCard = ({ news, index }) => {
           opacity: 0,
           transform: 'translate(0, 0)',
           transition: 'all 0.3s ease-in-out',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
         }}
       >
         <OpenInNewIcon sx={{ fontSize: 18, color: 'primary.main' }} />
@@ -84,12 +85,12 @@ const NewsCard = ({ news, index }) => {
         sx={{
           height: 120,
           overflow: 'hidden',
-          bgcolor: 'grey.100',
+          bgcolor: 'background.default',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           borderBottom: '1px solid',
-          borderColor: 'grey.200',
+          borderColor: 'divider',
         }}
       >
         <CardMedia
@@ -116,11 +117,11 @@ const NewsCard = ({ news, index }) => {
           p: 2.5,
         }}
       >
-        {/* Channel Name Badge */}
+        {/* Channel Name Badge - Coral */}
         <Box
           sx={{
             alignSelf: 'flex-start',
-            bgcolor: 'primary.main',
+            background: 'linear-gradient(135deg, #E85A4F 0%, #FF7B6F 100%)',
             color: 'white',
             px: 1.5,
             py: 0.5,
@@ -143,6 +144,7 @@ const NewsCard = ({ news, index }) => {
             fontSize: '1.1rem',
             lineHeight: 1.4,
             mb: 1,
+            color: 'text.primary',
             display: '-webkit-box',
             WebkitLineClamp: 2,
             WebkitBoxOrient: 'vertical',
@@ -155,15 +157,15 @@ const NewsCard = ({ news, index }) => {
         {/* Description */}
         <Typography 
           variant="body2" 
-          color="text.secondary" 
           sx={{ 
             textAlign: 'right',
             flexGrow: 1,
+            color: 'text.secondary',
             display: '-webkit-box',
             WebkitLineClamp: 3,
             WebkitBoxOrient: 'vertical',
             overflow: 'hidden',
-            lineHeight: 1.6,
+            lineHeight: 1.7,
           }}
         >
           {news.description}
@@ -178,13 +180,13 @@ const NewsCard = ({ news, index }) => {
             mt: 2,
             pt: 1.5,
             borderTop: '1px solid',
-            borderColor: 'grey.100',
+            borderColor: 'divider',
+            gap: 0.5,
           }}
         >
           <Typography 
             variant="caption" 
-            color="text.secondary"
-            sx={{ mr: 0.5 }}
+            sx={{ color: 'text.secondary' }}
           >
             {formatDate(news.date)}
           </Typography>

@@ -1,17 +1,140 @@
+/* ==========================================
+   Google Fonts - Hebrew-first typography
+   ========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap');
+
+/* ==========================================
+   CSS Custom Properties (Design Tokens)
+   Single source of truth for non-MUI elements
+   ========================================== */
+:root {
+  /* Primary palette */
+  --color-primary: #E85A4F;
+  --color-primary-light: #FF7B6F;
+  --color-primary-dark: #C74840;
+  
+  /* Neutral palette */
+  --color-text-primary: #2D3748;
+  --color-text-secondary: #718096;
+  --color-text-muted: #A0AEC0;
+  
+  /* Backgrounds */
+  --color-background: #F9F7F4;
+  --color-background-warm: #FBF9F7;
+  --color-surface: #FFFFFF;
+  
+  /* Shadows */
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+  
+  /* Typography */
+  --font-primary: 'Heebo', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Frank Ruhl Libre', Georgia, serif;
+  
+  /* Spacing */
+  --section-padding-y: clamp(4rem, 8vw, 8rem);
+  
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+}
+
+/* ==========================================
+   Base Styles
+   ========================================== */
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  line-height: 1.6;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+/* ==========================================
+   Tailwind
+   ========================================== */
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+/* ==========================================
+   Swiper Carousel Overrides (for coral theme)
+   ========================================== */
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--color-primary) !important;
+  background: var(--color-surface);
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50%;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.2s ease;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: var(--color-primary);
+  color: white !important;
+  transform: scale(1.05);
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 18px !important;
+  font-weight: 700;
+}
+
+.swiper-pagination-bullet {
+  background: var(--color-text-muted) !important;
+  opacity: 0.5;
+  width: 10px;
+  height: 10px;
+  transition: all 0.2s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--color-primary) !important;
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+/* ==========================================
+   Vertical Timeline Overrides
+   ========================================== */
+.vertical-timeline::before {
+  background: var(--color-primary) !important;
+  opacity: 0.3;
+}
+
+.vertical-timeline-element-date {
+  color: var(--color-text-secondary) !important;
+  font-weight: 500 !important;
+}
+
+/* ==========================================
+   Smooth Scrolling
+   ========================================== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ==========================================
+   Selection Color
+   ========================================== */
+::selection {
+  background: rgba(232, 90, 79, 0.2);
+  color: var(--color-text-primary);
+}

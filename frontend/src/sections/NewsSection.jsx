@@ -12,7 +12,7 @@ const NewsSection = () => {
       sx={{
         py: { xs: 10, md: 14 },
         minHeight: { xs: '70vh', md: '80vh' },
-        bgcolor: '#fff',
+        bgcolor: 'background.paper', // White
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -21,7 +21,7 @@ const NewsSection = () => {
         overflow: 'hidden',
       }}
     >
-      {/* Subtle background decoration */}
+      {/* Subtle background decoration - coral tinted */}
       <Box
         sx={{
           position: 'absolute',
@@ -30,7 +30,7 @@ const NewsSection = () => {
           width: '300px',
           height: '300px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(25, 118, 210, 0.03) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(232, 90, 79, 0.04) 0%, transparent 70%)',
           pointerEvents: 'none',
         }}
       />
@@ -42,7 +42,7 @@ const NewsSection = () => {
           width: '400px',
           height: '400px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(25, 118, 210, 0.03) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(232, 90, 79, 0.04) 0%, transparent 70%)',
           pointerEvents: 'none',
         }}
       />
@@ -57,18 +57,19 @@ const NewsSection = () => {
               fontWeight: 700,
               fontSize: { xs: '2rem', md: '2.5rem' },
               mb: 2,
+              color: 'text.primary',
             }}
           >
             הסיפור שנשמע
           </Typography>
           <Typography
             variant="body1"
-            color="text.secondary"
             sx={{
               maxWidth: '600px',
               mx: 'auto',
               fontSize: { xs: '1rem', md: '1.1rem' },
               lineHeight: 1.7,
+              color: 'text.secondary',
             }}
           >
             הסיפור של איתי הגיע רחוק, נגע בלבבות רבים והותיר חותם בתקשורת הישראלית
@@ -110,10 +111,10 @@ const NewsSection = () => {
         {/* Footer note */}
         <Typography
           variant="body2"
-          color="text.secondary"
           sx={{
             textAlign: 'center',
             mt: { xs: 5, md: 7 },
+            color: 'text.secondary',
             opacity: 0.7,
             fontStyle: 'italic',
           }}

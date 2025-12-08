@@ -10,6 +10,7 @@ import FlightIcon from "@mui/icons-material/Flight";
 import WorkIcon from "@mui/icons-material/Work";
 import "react-vertical-timeline-component/style.min.css";
 import timelineData from "../assets/data/timeline.json";
+
 // Map of icon names to components
 const iconMap = {
   School: <SchoolIcon />,
@@ -28,7 +29,8 @@ const TimelineSection = () => {
       component="section"
       sx={{
         py: { xs: 8, md: 12 },
-        bgcolor: "background.paper",
+        bgcolor: "background.default", // Warm cream background
+        position: 'relative',
       }}
     >
       <Container maxWidth="lg">
@@ -39,49 +41,74 @@ const TimelineSection = () => {
           sx={{ 
             textAlign: "center", 
             mb: 8,
-            fontSize: { xs: '2.5rem', md: '3.75rem' }, // Responsive font size
-            fontWeight: 700
+            fontSize: { xs: '2.5rem', md: '3.75rem' },
+            fontWeight: 700,
+            color: 'text.primary',
           }}
         >
           מסע החיים של איתי
         </Typography>
 
-        {
-          <VerticalTimeline>
-            {events.map((event) => (
-              <VerticalTimelineElement
-                key={event.id}
-                className="vertical-timeline-element"
-                contentStyle={{ background: "#fff", color: "#000", direction: "rtl", textAlign: "right" }}
-                contentArrowStyle={{ borderRight: "7px solid #fff" }}
-                date={event.date}
-                iconStyle={{ background: "#1976d2", color: "#fff" }}
-                icon={iconMap[event.icon] || <SchoolIcon />}
+        <VerticalTimeline lineColor="rgba(232, 90, 79, 0.2)">
+          {events.map((event) => (
+            <VerticalTimelineElement
+              key={event.id}
+              className="vertical-timeline-element"
+              contentStyle={{ 
+                background: "#FFFFFF", 
+                color: "#2D3748", 
+                direction: "rtl", 
+                textAlign: "right",
+                boxShadow: '0 2px 12px rgba(0, 0, 0, 0.06)',
+                borderRadius: '16px',
+                border: 'none',
+              }}
+              contentArrowStyle={{ borderRight: "7px solid #FFFFFF" }}
+              date={event.date}
+              iconStyle={{ 
+                background: "linear-gradient(135deg, #E85A4F 0%, #FF7B6F 100%)", 
+                color: "#fff",
+                boxShadow: '0 4px 12px rgba(232, 90, 79, 0.3)',
+              }}
+              icon={iconMap[event.icon] || <SchoolIcon />}
+            >
+              <Typography 
+                variant="h6" 
+                component="h3"
+                sx={{ 
+                  fontWeight: 600,
+                  color: 'text.primary',
+                  mb: 1,
+                }}
               >
-                <Typography variant="h6" component="h3">
-                  {event.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {event.description}
-                </Typography>
-                {event.image && (
-                  <Box
-                    component="img"
-                    src={event.image}
-                    alt={event.title}
-                    sx={{
-                      width: "100%",
-                      height: 200,
-                      objectFit: "cover",
-                      borderRadius: 1,
-                      mt: 2,
-                    }}
-                  />
-                )}
-              </VerticalTimelineElement>
-            ))}
-          </VerticalTimeline>
-        }
+                {event.title}
+              </Typography>
+              <Typography 
+                variant="body2" 
+                sx={{ 
+                  color: 'text.secondary',
+                  lineHeight: 1.7,
+                }}
+              >
+                {event.description}
+              </Typography>
+              {event.image && (
+                <Box
+                  component="img"
+                  src={event.image}
+                  alt={event.title}
+                  sx={{
+                    width: "100%",
+                    height: 200,
+                    objectFit: "cover",
+                    borderRadius: 2,
+                    mt: 2,
+                  }}
+                />
+              )}
+            </VerticalTimelineElement>
+          ))}
+        </VerticalTimeline>
       </Container>
     </Box>
   );

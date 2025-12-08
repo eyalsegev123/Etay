@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardMedia, Typography, Button, Box } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 
 const StoryCard = ({ story }) => {
@@ -13,37 +14,124 @@ const StoryCard = ({ story }) => {
         minHeight: '450px',
         display: 'flex',
         flexDirection: 'column',
-        transition: 'transform 0.2s',
         direction: 'rtl',
+        bgcolor: 'background.paper',
+        borderRadius: 4,
+        overflow: 'hidden',
+        boxShadow: '0 2px 12px rgba(0, 0, 0, 0.06)',
+        transition: 'all 0.3s ease-in-out',
         '&:hover': {
-          transform: 'translateY(-4px)',
+          transform: 'translateY(-6px)',
+          boxShadow: '0 12px 32px rgba(0, 0, 0, 0.1)',
         },
       }}
     >
-      <CardMedia
-        component="img"
-        height="200"
-        image={story.image}
-        alt={story.title}
-      />
-      <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-        <Typography gutterBottom variant="h5" component="h3" sx={{ textAlign: 'right' }}>
+      <Box sx={{ position: 'relative', overflow: 'hidden' }}>
+        <CardMedia
+          component="img"
+          height="200"
+          image={story.image}
+          alt={story.title}
+          sx={{
+            transition: 'transform 0.4s ease',
+            '&:hover': {
+              transform: 'scale(1.05)',
+            },
+          }}
+        />
+        {/* Subtle gradient overlay */}
+        <Box
+          sx={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: '50%',
+            background: 'linear-gradient(to top, rgba(0,0,0,0.3), transparent)',
+            pointerEvents: 'none',
+          }}
+        />
+      </Box>
+      
+      <CardContent 
+        sx={{ 
+          flexGrow: 1, 
+          display: 'flex', 
+          flexDirection: 'column',
+          p: 3,
+        }}
+      >
+        <Typography 
+          gutterBottom 
+          variant="h5" 
+          component="h3" 
+          sx={{ 
+            textAlign: 'right',
+            fontWeight: 600,
+            color: 'text.primary',
+            mb: 1.5,
+          }}
+        >
           {story.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary" paragraph sx={{ textAlign: 'right' }}>
+        
+        <Typography 
+          variant="body2" 
+          paragraph 
+          sx={{ 
+            textAlign: 'right',
+            color: 'text.secondary',
+            lineHeight: 1.7,
+            mb: 2,
+          }}
+        >
           {story.preview}
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, justifyContent: 'flex-end' }}>
-          <Typography variant="subtitle2" color="text.secondary" sx={{ mr: 1 }}>
+        
+        {/* Author */}
+        <Box 
+          sx={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            mb: 3, 
+            justifyContent: 'flex-end',
+            gap: 1,
+          }}
+        >
+          <Typography 
+            variant="subtitle2" 
+            sx={{ 
+              color: 'text.secondary',
+              fontWeight: 500,
+            }}
+          >
             {story.author}
           </Typography>
-          <PersonIcon sx={{ fontSize: 20 }} color="action" />
+          <Box
+            sx={{
+              width: 32,
+              height: 32,
+              borderRadius: '50%',
+              bgcolor: 'rgba(232, 90, 79, 0.1)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <PersonIcon sx={{ fontSize: 18, color: 'primary.main' }} />
+          </Box>
         </Box>
+        
+        {/* Read More Button */}
         <Button 
           variant="contained" 
           onClick={() => navigate(`/story/${story.id}`)}
           fullWidth
-          sx={{ mt: 'auto' }}
+          endIcon={<ArrowBackIcon />}
+          sx={{ 
+            mt: 'auto',
+            py: 1.25,
+          }}
         >
           קרא עוד
         </Button>

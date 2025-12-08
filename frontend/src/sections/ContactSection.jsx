@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Box, Container, Typography, TextField, Button, Alert, Grid } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
 import { sendContactMessage } from '../services/emailService';
 
 const ContactSection = () => {
@@ -36,25 +37,55 @@ const ContactSection = () => {
       id="contact"
       component="section" 
       sx={{ 
-        py: { xs: 12, md: 16 },
+        py: { xs: 10, md: 14 },
         minHeight: { xs: '80vh', md: '90vh' },
-        bgcolor: 'background.paper',
+        bgcolor: 'background.default', // Warm cream
         display: 'flex',
         alignItems: 'center',
-        direction: 'rtl'
+        direction: 'rtl',
+        position: 'relative',
       }}
     >
       <Container maxWidth="md">
-        <Typography
-          variant="h2"
-          component="h2"
-          gutterBottom
-          sx={{ textAlign: 'center', mb: 4 }}
+        {/* Header */}
+        <Box sx={{ textAlign: 'center', mb: 6 }}>
+          <Typography
+            variant="h2"
+            component="h2"
+            sx={{
+              fontWeight: 700,
+              mb: 2,
+              color: 'text.primary',
+            }}
+          >
+            צור קשר ובקשות הנצחה
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              color: 'text.secondary',
+              maxWidth: '500px',
+              mx: 'auto',
+            }}
+          >
+            נשמח לשמוע מכם ולעזור בכל בקשה להנצחת זכרו של איתי
+          </Typography>
+        </Box>
+
+        {/* Form Card */}
+        <Box 
+          component="form" 
+          onSubmit={handleSubmit} 
+          noValidate
+          dir="rtl"
+          sx={{
+            bgcolor: 'background.paper',
+            borderRadius: 4,
+            p: { xs: 3, md: 5 },
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
+          }}
         >
-          צור קשר ובקשות הנצחה
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} direction="row-reverse">
             <Grid item xs={12} sm={6}>
               <TextField
                 required
@@ -63,7 +94,8 @@ const ContactSection = () => {
                 label="שם מלא"
                 value={formData.name}
                 onChange={handleChange}
-                sx={{ textAlign: 'right' }}
+                InputProps={{ sx: { textAlign: 'right' } }}
+                InputLabelProps={{ sx: { right: 14, left: 'auto', transformOrigin: 'top right' } }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -75,7 +107,8 @@ const ContactSection = () => {
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                sx={{ textAlign: 'right' }}
+                InputProps={{ sx: { textAlign: 'right' } }}
+                InputLabelProps={{ sx: { right: 14, left: 'auto', transformOrigin: 'top right' } }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -85,7 +118,9 @@ const ContactSection = () => {
                 label="בקשה לפריט הנצחה"
                 value={formData.itemRequest}
                 onChange={handleChange}
-                sx={{ textAlign: 'right' }}
+                placeholder="לדוגמה: מחברת, חולצה, מדבקה..."
+                InputProps={{ sx: { textAlign: 'right' } }}
+                InputLabelProps={{ sx: { right: 14, left: 'auto', transformOrigin: 'top right' } }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -98,7 +133,8 @@ const ContactSection = () => {
                 label="הודעה"
                 value={formData.message}
                 onChange={handleChange}
-                sx={{ textAlign: 'right' }}
+                InputProps={{ sx: { textAlign: 'right' } }}
+                InputLabelProps={{ sx: { right: 14, left: 'auto', transformOrigin: 'top right' } }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -108,20 +144,40 @@ const ContactSection = () => {
                 size="large"
                 fullWidth
                 disabled={status === 'sending'}
+                endIcon={<SendIcon />}
+                sx={{
+                  py: 1.5,
+                  fontSize: '1.1rem',
+                  gap: 1.5,
+                }}
               >
                 {status === 'sending' ? 'שולח...' : 'שלח הודעה'}
               </Button>
             </Grid>
           </Grid>
         </Box>
+
+        {/* Status Messages */}
         {status === 'success' && (
-          <Alert severity="success" sx={{ mt: 2 }}>
-            ההודעה נשלחה בהצלחה!
+          <Alert 
+            severity="success" 
+            sx={{ 
+              mt: 3,
+              borderRadius: 3,
+            }}
+          >
+            ההודעה נשלחה בהצלחה! נחזור אליכם בהקדם.
           </Alert>
         )}
         {status === 'error' && (
-          <Alert severity="error" sx={{ mt: 2 }}>
-            שגיאה בשליחת ההודעה. אנא נסה שוב.
+          <Alert 
+            severity="error" 
+            sx={{ 
+              mt: 3,
+              borderRadius: 3,
+            }}
+          >
+            שגיאה בשליחת ההודעה. אנא נסו שוב.
           </Alert>
         )}
       </Container>

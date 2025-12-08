@@ -15,6 +15,12 @@ const bounce = keyframes`
   60% { transform: translateY(-5px); }
 `;
 
+// Fade in animation
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
+
 const WelcomeSection = () => {
   return (
     <Box 
@@ -27,7 +33,7 @@ const WelcomeSection = () => {
         justifyContent: 'center',
         position: 'relative',
         overflow: 'hidden',
-        backgroundColor: '#000',
+        backgroundColor: '#1a1a1a',
       }}
     >
       {/* Background Image with Animation */}
@@ -40,13 +46,13 @@ const WelcomeSection = () => {
           bottom: 0,
           backgroundImage: `url(${welcomePic})`,
           backgroundSize: 'cover',
-          backgroundPosition: '50% 20%', // Adjusted for standing portrait to show face/upper body
+          backgroundPosition: '50% 20%',
           animation: `${kenBurns} 20s ease-out infinite alternate`,
           zIndex: 0,
         }}
       />
 
-      {/* Dark Overlay - Gradient at Top (for Header) and Bottom (for Title) */}
+      {/* Gradient Overlay - Warmer tone */}
       <Box
         sx={{
           position: 'absolute',
@@ -56,60 +62,80 @@ const WelcomeSection = () => {
           bottom: 0,
           background: `
             linear-gradient(to bottom, 
-              rgba(0,0,0,0.7) 0%, 
-              rgba(0,0,0,0) 20%, 
-              rgba(0,0,0,0) 60%, 
-              rgba(0,0,0,0.8) 100%
+              rgba(0,0,0,0.6) 0%, 
+              rgba(0,0,0,0.1) 30%, 
+              rgba(0,0,0,0.1) 50%, 
+              rgba(45,55,72,0.85) 100%
             )
           `,
           zIndex: 1,
         }}
       />
 
-      {/* Content - Moved to bottom to clear the face */}
+      {/* Content */}
       <Box
         sx={{
           position: 'absolute',
-          bottom: '15%',
+          bottom: '12%',
           left: 0,
           right: 0,
           zIndex: 2,
           textAlign: 'center',
           color: 'white',
-          px: 2,
+          px: 3,
+          animation: `${fadeIn} 1.2s ease-out`,
         }}
       >
+        {/* Main Title */}
         <Typography 
-          variant="h2" 
+          variant="h1" 
           component="h1" 
           sx={{ 
+            fontFamily: '"Heebo", sans-serif',
             fontWeight: 700, 
-            mb: 1,
-            textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
-            fontSize: { xs: '2.5rem', md: '4.5rem' }
+            mb: 2,
+            textShadow: '2px 4px 8px rgba(0,0,0,0.5)',
+            fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' },
+            letterSpacing: '-0.02em',
           }}
         >
           לזכר איתי אזולאי ז״ל
         </Typography>
+
+        {/* Dates */}
         <Typography 
           variant="h4" 
           sx={{ 
-            fontWeight: 300, 
+            fontFamily: '"Frank Ruhl Libre", serif',
+            fontWeight: 400, 
             opacity: 0.95,
-            textShadow: '1px 1px 2px rgba(0,0,0,0.7)',
-            mb: 4,
-            letterSpacing: '2px'
+            textShadow: '1px 2px 4px rgba(0,0,0,0.5)',
+            mb: 3,
+            letterSpacing: '3px',
+            fontSize: { xs: '1.25rem', md: '1.75rem' },
           }}
         >
           1999 - 2024
         </Typography>
+
+        {/* Decorative line */}
+        <Box
+          sx={{
+            width: '60px',
+            height: '3px',
+            background: 'linear-gradient(90deg, #E85A4F, #FF7B6F)',
+            mx: 'auto',
+            borderRadius: '2px',
+            boxShadow: '0 2px 8px rgba(232, 90, 79, 0.4)',
+          }}
+        />
       </Box>
 
       {/* Scroll Indicator */}
       <Box
         sx={{
           position: 'absolute',
-          bottom: 40,
+          bottom: 32,
           left: '50%',
           transform: 'translateX(-50%)',
           zIndex: 2,
@@ -117,18 +143,32 @@ const WelcomeSection = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          opacity: 0.8,
+          opacity: 0.7,
           cursor: 'pointer',
+          transition: 'opacity 0.2s',
+          '&:hover': {
+            opacity: 1,
+          },
         }}
         onClick={() => {
           document.getElementById('timeline')?.scrollIntoView({ behavior: 'smooth' });
         }}
       >
-        <Typography variant="body2" sx={{ mb: 1, fontSize: '0.9rem' }}>גלול למטה</Typography>
+        <Typography 
+          variant="body2" 
+          sx={{ 
+            mb: 0.5, 
+            fontSize: '0.85rem',
+            fontWeight: 500,
+            letterSpacing: '1px',
+          }}
+        >
+          גלול למטה
+        </Typography>
         <KeyboardArrowDownIcon 
           sx={{ 
-            fontSize: 40,
-            animation: `${bounce} 2s infinite`
+            fontSize: 36,
+            animation: `${bounce} 2s infinite`,
           }} 
         />
       </Box>

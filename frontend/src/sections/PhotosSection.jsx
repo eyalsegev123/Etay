@@ -1,32 +1,59 @@
-import { Container, Typography, Button } from '@mui/material';
+import { Box, Container, Typography, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { MasonryGridGallery } from '../components/MasonryGridGallery';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const PhotosSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="photos" style={{ padding: '4rem 0 1rem', background: '#fff' }}> {/* Increased top padding for separation */}
+    <Box
+      id="photos"
+      component="section"
+      sx={{
+        py: { xs: 8, md: 10 },
+        bgcolor: 'background.paper', // White for contrast
+        position: 'relative',
+      }}
+    >
       <Container maxWidth="lg">
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center', 
-          marginBottom: '1.5rem',
-          flexDirection: 'row-reverse' // Ensure RTL layout visually
-        }}>
-          <Typography variant="h4" component="h2" sx={{ fontWeight: 700, margin: 0 }}>
+        {/* Header */}
+        <Box 
+          sx={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            mb: 4,
+            flexDirection: 'row-reverse',
+          }}
+        >
+          <Typography 
+            variant="h4" 
+            component="h2" 
+            sx={{ 
+              fontWeight: 700,
+              color: 'text.primary',
+            }}
+          >
             רגע להיזכר בכל הרגעים היפים
           </Typography>
-          <Button variant="contained" size="medium" onClick={() => navigate('/photos')}>
+          <Button 
+            variant="contained" 
+            size="medium" 
+            onClick={() => navigate('/photos')}
+            endIcon={<ArrowBackIcon />}
+            sx={{
+              px: 3,
+            }}
+          >
             לעוד תמונות
           </Button>
-        </div>
+        </Box>
 
+        {/* Gallery */}
         <MasonryGridGallery />
       </Container>
-    </section>
+    </Box>
   );
 };
 

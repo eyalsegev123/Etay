@@ -28,6 +28,20 @@ let photosCache = null;
 let isLoading = false;
 const loadingPromise = { current: null };
 
+// Reusable image component with hover effect
+const GalleryImage = ({ src, alt }) => (
+  <div className="relative overflow-hidden rounded-xl group cursor-pointer">
+    <img
+      className="w-full aspect-[3/4] object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+      src={src}
+      alt={alt}
+      referrerPolicy="no-referrer"
+    />
+    {/* Hover overlay */}
+    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+  </div>
+);
+
 export function MasonryGridGallery() {
   const [photos, setPhotos] = useState(photosCache || []);
   const [loading, setLoading] = useState(!photosCache);
@@ -83,15 +97,26 @@ export function MasonryGridGallery() {
   
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
-        <CircularProgress />
+      <Box 
+        sx={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center',
+          p: 8,
+        }}
+      >
+        <CircularProgress 
+          sx={{ 
+            color: 'primary.main',
+          }} 
+        />
       </Box>
     );
   }
   
   if (error) {
     return (
-      <Typography color="error" align="center">
+      <Typography color="text.secondary" align="center" sx={{ py: 4 }}>
         {error}
       </Typography>
     );
@@ -100,13 +125,12 @@ export function MasonryGridGallery() {
   // Fallback to static images if no photos from Google Drive
   if (photos.flat().length === 0) {
     return (
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {staticImages.map((column, index) => (
-          <div key={index} className="grid gap-4">
+          <div key={index} className="grid gap-3 md:gap-4">
             {column.map((image, imgIndex) => (
-              <img
+              <GalleryImage
                 key={imgIndex}
-                className="w-full aspect-[3/4] rounded-lg object-cover"
                 src={image}
                 alt={`gallery-photo-${imgIndex}`}
               />
@@ -118,16 +142,14 @@ export function MasonryGridGallery() {
   }
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
       {photos.map((column, index) => (
-        <div key={index} className="grid gap-4">
+        <div key={index} className="grid gap-3 md:gap-4">
           {column.map((photo, imgIndex) => (
-            <img
+            <GalleryImage
               key={photo.id || imgIndex}
-              className="w-full aspect-[3/4] rounded-lg object-cover"
               src={photo.thumbnailSrc || photo.src}
               alt={photo.title || `gallery-photo-${imgIndex}`}
-              referrerPolicy="no-referrer"
             />
           ))}
         </div>
