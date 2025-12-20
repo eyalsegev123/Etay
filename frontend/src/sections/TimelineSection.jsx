@@ -1,324 +1,130 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { Box, Typography, Container, IconButton } from '@mui/material';
-import { motion, AnimatePresence } from 'framer-motion';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { YearNavigation, TimelineScene } from '../components/timeline';
+import { useState, useRef, useMemo } from 'react';
+import { Box } from '@mui/material';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Keyboard, EffectFade } from 'swiper/modules';
+
+import TimelineScene from '../components/timeline/TimelineScene';
+import IntroSlide from '../components/timeline/IntroSlide';
+import NavigationArrows from '../components/timeline/NavigationArrows';
+import YearPagination from '../components/timeline/YearPagination';
+import ProgressIndicator from '../components/timeline/ProgressIndicator';
 import timelineData from '../assets/data/timeline.json';
 
+// Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
+
 /**
- * TimelineSection - Immersive full-screen journey through Etay's life
+ * TimelineSection - Horizontal swiper journey through Etay's life
+ * 
+ * A full-viewport horizontal slider that presents life events as cinematic scenes.
+ * 
+ * Features:
+ * - Swipe/drag navigation on mobile
+ * - Arrow keys and click navigation on desktop
+ * - Year dots for quick jumping between events
+ * - Progress indicator showing current position
  * 
  * Architecture:
- * - Full-viewport scroll-snap container
- * - Each life event is a cinematic "scene"
- * - Fixed year navigation for quick access
- * - Intersection Observer tracks active section
- * 
- * Mobile Considerations:
- * - Touch-optimized scroll snapping
- * - Bottom navigation bar on mobile
- * - Responsive layouts in child components
+ * - IntroSlide: Opening hero with call-to-action
+ * - TimelineScene: Individual event slides (imported from components)
+ * - NavigationArrows: Left/right arrow buttons
+ * - YearPagination: Clickable year dots
+ * - ProgressIndicator: Current/total counter
  */
+
+// Swiper configuration for optimal UX
+const SWIPER_CONFIG = {
+  modules: [Navigation, Pagination, Keyboard, EffectFade],
+  speed: 600,
+  spaceBetween: 0,
+  slidesPerView: 1,
+  keyboard: { enabled: true },
+  allowTouchMove: true,
+  grabCursor: true,
+  // Allow vertical page scrolling while enabling horizontal swipes
+  touchReleaseOnEdges: true,
+  threshold: 10,
+  touchAngle: 45,
+  dir: 'rtl',
+};
 
 const TimelineSection = () => {
   const events = timelineData.events;
-  const [activeIndex, setActiveIndex] = useState(0);
-  const containerRef = useRef(null);
-  const sceneRefs = useRef([]);
+  const [activeIndex, setActiveIndex] = useState(-1); // -1 means intro slide
+  const swiperRef = useRef(null);
 
-  // Initialize refs array for scenes
-  useEffect(() => {
-    sceneRefs.current = sceneRefs.current.slice(0, events.length);
-  }, [events.length]);
+  // Extract year labels for pagination
+  const yearLabels = useMemo(
+    () => events.map((event) => event.date.match(/\d{4}/)?.[0] || event.date),
+    [events]
+  );
 
-  /**
-   * Scroll to a specific scene by index
-   * Used by YearNavigation for click-to-jump functionality
-   */
-  const scrollToScene = useCallback((index) => {
-    const scene = document.getElementById(`timeline-scene-${events[index].id}`);
-    if (scene) {
-      scene.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [events]);
+  // Handle slide change - account for intro slide at index 0
+  const handleSlideChange = (swiper) => {
+    const eventIndex = swiper.activeIndex - 1; // -1 because intro is at 0
+    setActiveIndex(eventIndex);
+  };
 
-  /**
-   * Intersection Observer to track which scene is currently visible
-   * Updates activeIndex for navigation highlighting
-   */
-  useEffect(() => {
-    const observerOptions = {
-      root: null, // viewport
-      rootMargin: '-40% 0px -40% 0px', // Trigger when scene is in center 20%
-      threshold: 0,
-    };
+  // Navigate to specific event slide (+1 to account for intro)
+  const goToSlide = (eventIndex) => {
+    swiperRef.current?.slideTo(eventIndex + 1);
+  };
 
-    const observerCallback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const sceneId = entry.target.id;
-          const index = events.findIndex(
-            (e) => `timeline-scene-${e.id}` === sceneId
-          );
-          if (index !== -1) {
-            setActiveIndex(index);
-          }
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-    // Observe all scene elements
-    events.forEach((event) => {
-      const scene = document.getElementById(`timeline-scene-${event.id}`);
-      if (scene) {
-        observer.observe(scene);
-      }
-    });
-
-    return () => observer.disconnect();
-  }, [events]);
+  const isViewingEvents = activeIndex >= 0;
 
   return (
     <Box
       id="timeline"
       component="section"
-      ref={containerRef}
       sx={{
+        height: '100vh',
+        width: '100%',
         position: 'relative',
-        // No scroll-snap on the container itself - let natural page scroll work
-        // Each scene handles its own snap alignment
+        overflow: 'hidden',
+        touchAction: 'pan-y pinch-zoom',
       }}
     >
-      {/* Hero Intro Section */}
-      <IntroSection onScrollDown={() => scrollToScene(0)} />
+      <Swiper
+        onSwiper={(swiper) => { swiperRef.current = swiper; }}
+        onSlideChange={handleSlideChange}
+        {...SWIPER_CONFIG}
+        style={{ height: '100%', width: '100%' }}
+      >
+        {/* Intro Slide */}
+        <SwiperSlide>
+          <IntroSlide onStart={() => goToSlide(0)} />
+        </SwiperSlide>
 
-      {/* Timeline Scenes */}
-      {events.map((event, index) => (
-        <TimelineScene
-          key={event.id}
-          event={event}
-          index={index}
-          isActive={activeIndex === index}
-        />
-      ))}
+        {/* Event Slides */}
+        {events.map((event, index) => (
+          <SwiperSlide key={event.id}>
+            <TimelineScene
+              event={event}
+              index={index}
+              isActive={activeIndex === index}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
-      {/* Year Navigation - Fixed position */}
-      <YearNavigation
-        events={events}
+      {/* Navigation Controls */}
+      <NavigationArrows swiperRef={swiperRef} />
+
+      <YearPagination
+        years={yearLabels}
         activeIndex={activeIndex}
-        onYearClick={scrollToScene}
+        onYearClick={goToSlide}
+        isVisible={isViewingEvents}
       />
-    </Box>
-  );
-};
 
-/**
- * IntroSection - Opening hero section before the timeline begins
- * 
- * Creates anticipation and invites users to scroll into the journey
- */
-const IntroSection = ({ onScrollDown }) => {
-  const [showScrollHint, setShowScrollHint] = useState(true);
-
-  // Hide scroll hint after user starts scrolling
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 100) {
-        setShowScrollHint(false);
-      } else {
-        setShowScrollHint(true);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
-        background: `
-          linear-gradient(
-            135deg,
-            #1a1a2e 0%,
-            #16213e 50%,
-            #0f3460 100%
-          )
-        `,
-        scrollSnapAlign: 'start',
-        overflow: 'hidden',
-      }}
-    >
-      {/* Animated background particles/stars effect */}
-      <BackgroundStars />
-
-      <Container maxWidth="md" sx={{ textAlign: 'center', zIndex: 1 }}>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <Typography
-            variant="overline"
-            sx={{
-              color: 'rgba(255, 255, 255, 0.7)',
-              fontSize: { xs: '0.9rem', md: '1rem' },
-              letterSpacing: '0.2em',
-              mb: 2,
-              display: 'block',
-            }}
-          >
-            מסע בזמן
-          </Typography>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          <Typography
-            variant="h1"
-            sx={{
-              fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' },
-              fontWeight: 700,
-              color: 'white',
-              mb: 3,
-              lineHeight: 1.2,
-              textShadow: '0 4px 30px rgba(0, 0, 0, 0.3)',
-            }}
-          >
-            סיפור החיים של איתי
-          </Typography>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-        >
-          <Typography
-            sx={{
-              fontSize: { xs: '1.1rem', md: '1.3rem' },
-              color: 'rgba(255, 255, 255, 0.8)',
-              maxWidth: 500,
-              mx: 'auto',
-              lineHeight: 1.8,
-            }}
-          >
-            גלול למטה כדי לצאת למסע דרך הרגעים המשמעותיים בחייו של איתי
-          </Typography>
-        </motion.div>
-      </Container>
-
-      {/* Scroll Down Indicator */}
-      <AnimatePresence>
-        {showScrollHint && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            style={{
-              position: 'absolute',
-              bottom: 40,
-              left: '50%',
-              transform: 'translateX(-50%)',
-            }}
-          >
-            <IconButton
-              onClick={onScrollDown}
-              sx={{
-                color: 'white',
-                animation: 'bounce 2s infinite',
-                '@keyframes bounce': {
-                  '0%, 20%, 50%, 80%, 100%': {
-                    transform: 'translateY(0)',
-                  },
-                  '40%': {
-                    transform: 'translateY(-10px)',
-                  },
-                  '60%': {
-                    transform: 'translateY(-5px)',
-                  },
-                },
-              }}
-            >
-              <KeyboardArrowDownIcon sx={{ fontSize: 40 }} />
-            </IconButton>
-            <Typography
-              sx={{
-                color: 'rgba(255, 255, 255, 0.6)',
-                fontSize: '0.85rem',
-                textAlign: 'center',
-                mt: 1,
-              }}
-            >
-              גלול למטה
-            </Typography>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </Box>
-  );
-};
-
-/**
- * BackgroundStars - Subtle animated star/particle effect for intro
- */
-const BackgroundStars = () => {
-  // Generate random star positions
-  const stars = Array.from({ length: 50 }, (_, i) => ({
-    id: i,
-    left: `${Math.random() * 100}%`,
-    top: `${Math.random() * 100}%`,
-    size: Math.random() * 3 + 1,
-    delay: Math.random() * 3,
-    duration: Math.random() * 3 + 2,
-  }));
-
-  return (
-    <Box
-      sx={{
-        position: 'absolute',
-        inset: 0,
-        overflow: 'hidden',
-        pointerEvents: 'none',
-      }}
-    >
-      {stars.map((star) => (
-        <Box
-          key={star.id}
-          component={motion.div}
-          animate={{
-            opacity: [0.2, 0.8, 0.2],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: star.duration,
-            delay: star.delay,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          sx={{
-            position: 'absolute',
-            left: star.left,
-            top: star.top,
-            width: star.size,
-            height: star.size,
-            borderRadius: '50%',
-            bgcolor: 'rgba(255, 255, 255, 0.8)',
-          }}
-        />
-      ))}
+      <ProgressIndicator
+        current={activeIndex + 1}
+        total={events.length}
+        isVisible={isViewingEvents}
+      />
     </Box>
   );
 };

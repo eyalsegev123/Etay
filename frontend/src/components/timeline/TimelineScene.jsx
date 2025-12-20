@@ -9,15 +9,17 @@ import WorkIcon from '@mui/icons-material/Work';
 /**
  * TimelineScene - Full-viewport cinematic scene for a single life event
  * 
+ * Used as a Swiper slide in horizontal timeline navigation.
+ * 
  * Layout:
  * - Large hero image taking significant viewport space
  * - Overlaid content with title, date, description
- * - Scroll-triggered entrance animations
+ * - Entrance animations when slide becomes active
  * - Responsive design prioritizing mobile experience
  * 
  * Animations:
- * - Image has subtle Ken Burns (zoom) effect
- * - Content fades up with staggered timing
+ * - Image has subtle Ken Burns (zoom) effect when active
+ * - Content fades in with staggered timing
  * - Respects user's reduced motion preferences
  */
 
@@ -37,7 +39,7 @@ const containerVariants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.15,
-      delayChildren: 0.2,
+      delayChildren: 0.3,
     },
   },
 };
@@ -54,25 +56,19 @@ const itemVariants = {
   },
 };
 
-const TimelineScene = ({ event, isActive, index }) => {
+const TimelineScene = ({ event, isActive }) => {
   const prefersReducedMotion = useReducedMotion();
   const IconComponent = iconMap[event.icon] || SchoolIcon;
-  
-  // Alternate layout direction for visual variety (odd/even)
-  const isReversed = index % 2 === 1;
 
   return (
     <Box
       id={`timeline-scene-${event.id}`}
-      component="section"
       sx={{
-        minHeight: '100vh',
+        height: '100%',
         width: '100%',
         position: 'relative',
         display: 'flex',
         alignItems: 'center',
-        scrollSnapAlign: 'start',
-        scrollSnapStop: 'always',
         overflow: 'hidden',
       }}
     >
@@ -94,6 +90,9 @@ const TimelineScene = ({ event, isActive, index }) => {
           position: 'relative', 
           zIndex: 2,
           py: { xs: 4, md: 0 },
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
         <Box
@@ -103,14 +102,12 @@ const TimelineScene = ({ event, isActive, index }) => {
           animate={isActive ? 'visible' : 'hidden'}
           sx={{
             display: 'flex',
-            flexDirection: { 
-              xs: 'column', 
-              md: isReversed ? 'row-reverse' : 'row' 
-            },
-            alignItems: { xs: 'center', md: 'center' },
-            justifyContent: 'space-between',
+            flexDirection: { xs: 'column', md: 'row' },
+            alignItems: 'center',
+            justifyContent: 'center',
             gap: { xs: 4, md: 8 },
             direction: 'rtl',
+            width: '100%',
           }}
         >
           {/* Text Content Side */}
@@ -140,9 +137,9 @@ const BackgroundImage = ({ src, alt, isActive, prefersReducedMotion }) => (
     animate={
       prefersReducedMotion 
         ? {} 
-        : { scale: isActive ? 1.05 : 1 }
+        : { scale: isActive ? 1.08 : 1 }
     }
-    transition={{ duration: 8, ease: 'linear' }}
+    transition={{ duration: 10, ease: 'linear' }}
     sx={{
       position: 'absolute',
       inset: 0,
@@ -157,8 +154,8 @@ const BackgroundImage = ({ src, alt, isActive, prefersReducedMotion }) => (
         width: '100%',
         height: '100%',
         objectFit: 'cover',
-        filter: 'blur(2px)',
-        transform: 'scale(1.1)', // Prevent blur edges from showing
+        filter: 'blur(3px)',
+        transform: 'scale(1.15)', // Prevent blur edges from showing
       }}
     />
   </Box>
@@ -175,10 +172,10 @@ const GradientOverlay = () => (
       zIndex: 1,
       background: `
         linear-gradient(
-          to bottom,
-          rgba(0, 0, 0, 0.3) 0%,
-          rgba(0, 0, 0, 0.6) 50%,
-          rgba(0, 0, 0, 0.8) 100%
+          135deg,
+          rgba(0, 0, 0, 0.7) 0%,
+          rgba(0, 0, 0, 0.5) 50%,
+          rgba(0, 0, 0, 0.7) 100%
         )
       `,
     }}
@@ -204,15 +201,15 @@ const ContentBlock = ({ event, IconComponent, itemVariants }) => (
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: 64,
-        height: 64,
+        width: { xs: 56, md: 72 },
+        height: { xs: 56, md: 72 },
         borderRadius: '50%',
         bgcolor: 'rgba(59, 130, 246, 0.9)',
         mb: 3,
         boxShadow: '0 8px 32px rgba(59, 130, 246, 0.4)',
       }}
     >
-      <IconComponent sx={{ fontSize: 32, color: 'white' }} />
+      <IconComponent sx={{ fontSize: { xs: 28, md: 36 }, color: 'white' }} />
     </Box>
 
     {/* Date */}
@@ -220,11 +217,11 @@ const ContentBlock = ({ event, IconComponent, itemVariants }) => (
       component={motion.p}
       variants={itemVariants}
       sx={{
-        fontSize: { xs: '1rem', md: '1.1rem' },
+        fontSize: { xs: '1rem', md: '1.2rem' },
         fontWeight: 600,
         color: 'rgba(255, 255, 255, 0.8)',
-        mb: 1,
-        letterSpacing: '0.05em',
+        mb: 1.5,
+        letterSpacing: '0.08em',
       }}
     >
       {event.date}
@@ -236,12 +233,12 @@ const ContentBlock = ({ event, IconComponent, itemVariants }) => (
       variants={itemVariants}
       variant="h2"
       sx={{
-        fontSize: { xs: '2rem', sm: '2.5rem', md: '3.5rem' },
+        fontSize: { xs: '2rem', sm: '2.75rem', md: '3.5rem' },
         fontWeight: 700,
         color: 'white',
         mb: 3,
         lineHeight: 1.2,
-        textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+        textShadow: '0 4px 20px rgba(0, 0, 0, 0.4)',
       }}
     >
       {event.title}
@@ -252,10 +249,10 @@ const ContentBlock = ({ event, IconComponent, itemVariants }) => (
       component={motion.p}
       variants={itemVariants}
       sx={{
-        fontSize: { xs: '1rem', md: '1.2rem' },
+        fontSize: { xs: '1rem', md: '1.25rem' },
         color: 'rgba(255, 255, 255, 0.9)',
         lineHeight: 1.8,
-        maxWidth: 450,
+        maxWidth: 480,
         mx: { xs: 'auto', md: 0 },
         mr: { md: 0 },
       }}
@@ -273,9 +270,9 @@ const ImageCard = ({ event, itemVariants }) => (
     component={motion.div}
     variants={itemVariants}
     sx={{
-      flex: { xs: '1 1 auto', md: '0 1 45%' },
+      flex: { xs: '0 0 auto', md: '0 1 45%' },
       width: '100%',
-      maxWidth: { xs: 400, md: 500 },
+      maxWidth: { xs: 320, sm: 400, md: 480 },
     }}
   >
     <Box
@@ -283,9 +280,9 @@ const ImageCard = ({ event, itemVariants }) => (
         position: 'relative',
         borderRadius: 4,
         overflow: 'hidden',
-        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
-        transform: 'rotate(-2deg)',
-        transition: 'transform 0.4s ease',
+        boxShadow: '0 25px 60px -12px rgba(0, 0, 0, 0.6)',
+        transform: 'rotate(-1deg)',
+        transition: 'transform 0.5s ease',
         '&:hover': {
           transform: 'rotate(0deg) scale(1.02)',
         },
@@ -297,7 +294,7 @@ const ImageCard = ({ event, itemVariants }) => (
         alt={event.title}
         sx={{
           width: '100%',
-          height: { xs: 250, sm: 300, md: 350 },
+          height: { xs: 220, sm: 280, md: 360 },
           objectFit: 'cover',
           display: 'block',
         }}
@@ -308,7 +305,7 @@ const ImageCard = ({ event, itemVariants }) => (
         sx={{
           position: 'absolute',
           inset: 0,
-          border: '4px solid rgba(255, 255, 255, 0.2)',
+          border: '3px solid rgba(255, 255, 255, 0.15)',
           borderRadius: 4,
           pointerEvents: 'none',
         }}
