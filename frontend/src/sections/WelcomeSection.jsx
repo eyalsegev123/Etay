@@ -1,6 +1,6 @@
 import { Box, Typography, keyframes } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import welcomePic from "../assets/boat_photo_etay_better_asspect_ratio.jpeg";
+import welcomePic from "../assets/etay_pool_photo.png";
 
 // Animation for the background zoom (Ken Burns effect)
 const kenBurns = keyframes`
