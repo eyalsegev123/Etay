@@ -1,9 +1,17 @@
-import { Box, Container, Typography, Grid } from '@mui/material';
+import { Box, Container, Typography, Grid, useMediaQuery, useTheme } from '@mui/material';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
 import NewsCard from '../components/NewsCard';
 import newsData from '../assets/data/news.json';
 
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+
 const NewsSection = () => {
   const news = newsData.news;
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Box
@@ -76,30 +84,69 @@ const NewsSection = () => {
           </Typography>
         </Box>
 
-        {/* News Cards Grid */}
+        {/* News Cards - Swiper for mobile, Grid for desktop */}
         {news.length > 0 ? (
-          <Grid 
-            container 
-            spacing={4}
-            sx={{
-              justifyContent: 'center',
-            }}
-          >
-            {news.map((item, index) => (
-              <Grid 
-                item 
-                xs={12} 
-                sm={6} 
-                md={4} 
-                key={item.id}
-                sx={{
-                  display: 'flex',
-                }}
+          isMobile ? (
+            <Box
+              sx={{
+                '& .swiper': {
+                  pb: 5,
+                },
+                '& .swiper-pagination': {
+                  bottom: 0,
+                },
+                '& .swiper-pagination-bullet': {
+                  width: 10,
+                  height: 10,
+                  bgcolor: 'grey.300',
+                  opacity: 1,
+                  transition: 'all 0.3s ease',
+                },
+                '& .swiper-pagination-bullet-active': {
+                  bgcolor: 'primary.main',
+                  width: 24,
+                  borderRadius: 5,
+                },
+              }}
+            >
+              <Swiper
+                modules={[Pagination]}
+                pagination={{ clickable: true }}
+                spaceBetween={16}
+                slidesPerView={1}
+                dir="rtl"
               >
-                <NewsCard news={item} index={index} />
-              </Grid>
-            ))}
-          </Grid>
+                {news.map((item, index) => (
+                  <SwiperSlide key={item.id}>
+                    <NewsCard news={item} index={index} isMobile />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </Box>
+          ) : (
+            <Grid 
+              container 
+              spacing={4}
+              sx={{
+                justifyContent: 'center',
+              }}
+            >
+              {news.map((item, index) => (
+                <Grid 
+                  item 
+                  xs={12} 
+                  sm={6} 
+                  md={4} 
+                  key={item.id}
+                  sx={{
+                    display: 'flex',
+                  }}
+                >
+                  <NewsCard news={item} index={index} />
+                </Grid>
+              ))}
+            </Grid>
+          )
         ) : (
           <Box sx={{ textAlign: 'center', py: 4 }}>
             <Typography variant="h6" color="text.secondary">

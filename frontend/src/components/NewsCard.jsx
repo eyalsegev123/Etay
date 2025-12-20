@@ -9,7 +9,7 @@ const float = keyframes`
   50% { transform: translateY(-6px); }
 `;
 
-const NewsCard = ({ news, index }) => {
+const NewsCard = ({ news, index, isMobile = false }) => {
   const handleClick = () => {
     if (news.articleUrl && news.articleUrl !== '#') {
       window.open(news.articleUrl, '_blank', 'noopener,noreferrer');
@@ -31,7 +31,7 @@ const NewsCard = ({ news, index }) => {
       onClick={handleClick}
       sx={{
         height: '100%',
-        minHeight: '320px',
+        minHeight: isMobile ? '300px' : '320px',
         display: 'flex',
         flexDirection: 'column',
         direction: 'rtl',
@@ -42,17 +42,20 @@ const NewsCard = ({ news, index }) => {
         bgcolor: 'background.paper',
         boxShadow: '0 2px 12px rgba(0, 0, 0, 0.06)',
         transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-        animation: `${float} ${4 + index * 0.5}s ease-in-out infinite`,
-        animationDelay: `${index * 0.3}s`,
+        // Disable floating animation on mobile to prevent swiper conflicts
+        ...(!isMobile && {
+          animation: `${float} ${4 + index * 0.5}s ease-in-out infinite`,
+          animationDelay: `${index * 0.3}s`,
+        }),
         '&:hover': {
-          transform: 'translateY(-10px) scale(1.02)',
-          boxShadow: '0 16px 40px rgba(0, 0, 0, 0.12)',
+          transform: isMobile ? 'none' : 'translateY(-10px) scale(1.02)',
+          boxShadow: isMobile ? '0 2px 12px rgba(0, 0, 0, 0.06)' : '0 16px 40px rgba(0, 0, 0, 0.12)',
           '& .external-icon': {
-            opacity: 1,
-            transform: 'translate(-4px, 4px)',
+            opacity: isMobile ? 0 : 1,
+            transform: isMobile ? 'translate(0, 0)' : 'translate(-4px, 4px)',
           },
           '& .card-media': {
-            transform: 'scale(1.05)',
+            transform: isMobile ? 'none' : 'scale(1.05)',
           }
         },
       }}

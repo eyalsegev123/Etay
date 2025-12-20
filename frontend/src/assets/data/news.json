@@ -2,57 +2,57 @@
   "news": [
     {
       "id": 1,
-      "channelName": "חדשות 12",
-      "title": "גיבורי ישראל: סיפורו של איתי אזולאי",
-      "description": "כתבה מיוחדת על מסע חייו של איתי, מילדות בחיפה ועד לשירותו המסור ביחידה המובחרת...",
-      "logoUrl": "https://upload.wikimedia.org/wikipedia/he/thumb/c/c5/Channel_12_Logo_2018.svg/200px-Channel_12_Logo_2018.svg.png",
-      "articleUrl": "#",
-      "date": "2024-11-15"
+      "channelName": "ynet",
+      "title": "רס״ר איתי אזולאי ז״ל נפל בקרב בגבול לבנון",
+      "description": "איתי אזולאי, בן 25 מאורנית, לוחם ביחידת הניוד 5515, נפל בקרב בגבול לבנון. באותו אירוע נפצעו שני לוחמים נוספים באורח קשה.",
+      "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Ynet_website_logo.svg/200px-Ynet_website_logo.svg.png",
+      "articleUrl": "https://www.ynet.co.il/news/article/rk7j7re1jg",
+      "date": "2024-10-06"
     },
     {
       "id": 2,
-      "channelName": "ynet",
-      "title": "המפקד שדאג לכולם: חבריו של איתי מספרים",
-      "description": "ראיונות מרגשים עם חברי היחידה שמספרים על המנהיג והחבר שאיבדו...",
-      "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Ynet_website_logo.svg/200px-Ynet_website_logo.svg.png",
-      "articleUrl": "#",
-      "date": "2024-11-12"
+      "channelName": "וואלה! חדשות",
+      "title": "חייל מילואים נפל בקרב בצפון: איתי אזולאי בן 25",
+      "description": "רס״ר (במיל׳) איתי אזולאי מאורנית נפל בלחימה בגבול לבנון. חבריו ספדו לו וציינו את אופיו הטוב ואת תוכניותיו הגדולות לעתיד.",
+      "logoUrl": "https://upload.wikimedia.org/wikipedia/he/thumb/4/4f/Walla%21_Logo.svg/200px-Walla%21_Logo.svg.png",
+      "articleUrl": "https://news.walla.co.il/break/3696275",
+      "date": "2024-10-06"
     },
     {
       "id": 3,
-      "channelName": "כאן 11",
-      "title": "לזכרו של איתי: המורשת שנותרה",
-      "description": "תיעוד מיוחד על פרויקטים קהילתיים שהוקמו לזכרו של איתי אזולאי...",
-      "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Kan_11_logo.svg/200px-Kan_11_logo.svg.png",
-      "articleUrl": "#",
-      "date": "2024-11-08"
+      "channelName": "mnews",
+      "title": "חייל מילואים נפל בגבול לבנון: חבריו נפרדים",
+      "description": "חברתו של איתי, ירין, ספדה לו: ״אזכור אותך כילד הטהור והטוב שאתה. את השיחות והצחוק ואת החיוך שלך ואת החבר הטוב שאתה.״",
+      "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Maariv_nachrichten_logo.svg/200px-Maariv_nachrichten_logo.svg.png",
+      "articleUrl": "https://mnews.co.il/%D7%97%D7%93%D7%A9%D7%95%D7%AA/%D7%97%D7%99%D7%99%D7%9C-%D7%9E%D7%99%D7%9C%D7%95%D7%90%D7%99%D7%9D-%D7%A0%D7%A4%D7%9C-%D7%91%D7%92%D7%91%D7%95%D7%9C-%D7%9C%D7%91%D7%A0%D7%95%D7%9F/",
+      "date": "2024-10-07"
     },
     {
       "id": 4,
-      "channelName": "מעריב",
-      "title": "האח הגדול: משפחתו של איתי פותחת את ליבה",
-      "description": "שיחה אישית עם משפחת אזולאי על הבן, האח והחבר שהיה איתי...",
-      "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Maariv_Logo.svg/200px-Maariv_Logo.svg.png",
-      "articleUrl": "#",
-      "date": "2024-11-05"
+      "channelName": "kore.co.il",
+      "title": "מלחמת חרבות ברזל: רס״ר איתי אזולאי נפל בלחימה",
+      "description": "איתי אזולאי, לוחם ביחידת הניוד 5515, נפל בקרב בגבול לבנון במהלך מלחמת חרבות ברזל. הוא הותיר אחריו הורים ואחים.",
+      "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Kan_11_logo.svg/200px-Kan_11_logo.svg.png",
+      "articleUrl": "https://www.kore.co.il/viewArticle/169515",
+      "date": "2024-10-06"
     },
     {
       "id": 5,
-      "channelName": "וואלה! חדשות",
-      "title": "דור של גיבורים: איתי אזולאי ז״ל",
-      "description": "פרופיל מעמיק על איתי, חייו, חלומותיו והמורשת שהשאיר אחריו...",
-      "logoUrl": "https://upload.wikimedia.org/wikipedia/he/thumb/4/4f/Walla%21_Logo.svg/200px-Walla%21_Logo.svg.png",
-      "articleUrl": "#",
-      "date": "2024-10-30"
+      "channelName": "נופלים",
+      "title": "לזכרו של רס״ר (במיל׳) איתי אזולאי ז״ל",
+      "description": "דף זיכרון לאיתי אזולאי. הלווייתו התקיימה בבית העלמין הצבאי בפתח תקווה. יהי זכרו ברוך.",
+      "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Israel.svg/200px-Flag_of_Israel.svg.png",
+      "articleUrl": "https://noflim.org.il/%D7%A8%D7%A1%D7%A8-%D7%91%D7%9E%D7%99%D7%9C-%D7%90%D7%99%D7%AA%D7%99-%D7%90%D7%96%D7%95%D7%9C%D7%90%D7%99-%D7%96%D7%9C/",
+      "date": "2024-10-07"
     },
     {
       "id": 6,
-      "channelName": "הארץ",
-      "title": "סיפור אהבה ומסירות: זוכרים את איתי",
-      "description": "כתבה מרגשת על האהבה הגדולה של איתי למשפחתו, לחבריו ולארץ...",
-      "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Haaretz-logo-hebrew.svg/200px-Haaretz-logo-hebrew.svg.png",
-      "articleUrl": "#",
-      "date": "2024-10-25"
+      "channelName": "פודקאסט גיבורים",
+      "title": "פרק 29: רס״ר איתי אזולאי - הוריו ואחיו מספרים",
+      "description": "בפרק מיוחד של פודקאסט גיבורים, הוריו ואחיו של איתי מספרים על דמותו, שאפתנותו ונחישותו. סיפור חיים מרגש.",
+      "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Podcasts_%28iOS%29.svg/200px-Podcasts_%28iOS%29.svg.png",
+      "articleUrl": "https://podcasts.apple.com/il/podcast/%D7%A4%D7%A8%D7%A7-29-%D7%A8%D7%A1-%D7%A8-%D7%9E%D7%99%D7%9C-%D7%90%D7%99%D7%AA%D7%99-%D7%90%D7%96%D7%95%D7%9C%D7%90%D7%99-%D7%94%D7%99-%D7%93-%D7%9B%D7%9C-%D7%9E%D7%94-%D7%A9%D7%90%D7%AA%D7%94-%D7%A2%D7%95%D7%A9%D7%94-%D7%AA%D7%A2%D7%A9%D7%94-%D7%94%D7%9B%D7%99-%D7%98%D7%95%D7%91-%D7%A9%D7%9C%D7%9A/id1792379049?i=1000723809705",
+      "date": "2024-12-01"
     }
   ]
 }
