@@ -44,6 +44,7 @@ const PhotosSection = () => {
             endIcon={<ArrowBackIcon />}
             sx={{
               px: 3,
+              gap: 1,
             }}
           >
             לעוד תמונות

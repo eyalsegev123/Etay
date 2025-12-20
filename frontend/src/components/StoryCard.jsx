@@ -131,6 +131,7 @@ const StoryCard = ({ story }) => {
           sx={{ 
             mt: 'auto',
             py: 1.25,
+            gap: 1,
           }}
         >
           קרא עוד

@@ -1,6 +1,6 @@
-import { Box, Typography, keyframes } from '@mui/material';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import welcomePic from '../assets/boat_photo_etay_better_asspect_ratio.jpeg';
+import { Box, Typography, keyframes } from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import welcomePic from "../assets/boat_photo_etay_better_asspect_ratio.jpeg";
 
 // Animation for the background zoom (Ken Burns effect)
 const kenBurns = keyframes`
@@ -23,30 +23,30 @@ const fadeIn = keyframes`
 
 const WelcomeSection = () => {
   return (
-    <Box 
+    <Box
       id="welcome"
-      component="section" 
+      component="section"
       sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
-        overflow: 'hidden',
-        backgroundColor: '#1a1a1a',
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "relative",
+        overflow: "hidden",
+        backgroundColor: "#1a1a1a",
       }}
     >
       {/* Background Image with Animation */}
       <Box
         sx={{
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
           backgroundImage: `url(${welcomePic})`,
-          backgroundSize: 'cover',
-          backgroundPosition: '50% 20%',
+          backgroundSize: "cover",
+          backgroundPosition: "50% 20%",
           animation: `${kenBurns} 20s ease-out infinite alternate`,
           zIndex: 0,
         }}
@@ -55,7 +55,7 @@ const WelcomeSection = () => {
       {/* Gradient Overlay - Warmer tone */}
       <Box
         sx={{
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
           right: 0,
@@ -75,44 +75,44 @@ const WelcomeSection = () => {
       {/* Content */}
       <Box
         sx={{
-          position: 'absolute',
-          bottom: '12%',
+          position: "absolute",
+          bottom: "12%",
           left: 0,
           right: 0,
           zIndex: 2,
-          textAlign: 'center',
-          color: 'white',
+          textAlign: "center",
+          color: "white",
           px: 3,
           animation: `${fadeIn} 1.2s ease-out`,
         }}
       >
         {/* Main Title */}
-        <Typography 
-          variant="h1" 
-          component="h1" 
-          sx={{ 
+        <Typography
+          variant="h1"
+          component="h1"
+          sx={{
             fontFamily: '"Heebo", sans-serif',
-            fontWeight: 700, 
+            fontWeight: 700,
             mb: 2,
-            textShadow: '2px 4px 8px rgba(0,0,0,0.5)',
-            fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' },
-            letterSpacing: '-0.02em',
+            textShadow: "2px 4px 8px rgba(0,0,0,0.5)",
+            fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4.5rem" },
+            letterSpacing: "-0.02em",
           }}
         >
           לזכר איתי אזולאי ז״ל
         </Typography>
 
         {/* Dates */}
-        <Typography 
-          variant="h4" 
-          sx={{ 
+        <Typography
+          variant="h4"
+          sx={{
             fontFamily: '"Frank Ruhl Libre", serif',
-            fontWeight: 400, 
+            fontWeight: 400,
             opacity: 0.95,
-            textShadow: '1px 2px 4px rgba(0,0,0,0.5)',
+            textShadow: "1px 2px 4px rgba(0,0,0,0.5)",
             mb: 3,
-            letterSpacing: '3px',
-            fontSize: { xs: '1.25rem', md: '1.75rem' },
+            letterSpacing: "3px",
+            fontSize: { xs: "1.25rem", md: "1.75rem" },
           }}
         >
           1999 - 2024
@@ -121,12 +121,12 @@ const WelcomeSection = () => {
         {/* Decorative line */}
         <Box
           sx={{
-            width: '60px',
-            height: '3px',
-            background: 'linear-gradient(90deg, #3B82F6, #60A5FA)',
-            mx: 'auto',
-            borderRadius: '2px',
-            boxShadow: '0 2px 8px rgba(59, 130, 246, 0.4)',
+            width: "60px",
+            height: "3px",
+            background: "linear-gradient(90deg, #3B82F6, #60A5FA)",
+            mx: "auto",
+            borderRadius: "2px",
+            boxShadow: "0 2px 8px rgba(59, 130, 246, 0.4)",
           }}
         />
       </Box>
@@ -134,42 +134,44 @@ const WelcomeSection = () => {
       {/* Scroll Indicator */}
       <Box
         sx={{
-          position: 'absolute',
+          position: "absolute",
           bottom: 32,
-          left: '50%',
-          transform: 'translateX(-50%)',
+          left: "50%",
+          transform: "translateX(-50%)",
           zIndex: 2,
-          color: 'white',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          color: "white",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
           opacity: 0.7,
-          cursor: 'pointer',
-          transition: 'opacity 0.2s',
-          '&:hover': {
+          cursor: "pointer",
+          transition: "opacity 0.2s",
+          "&:hover": {
             opacity: 1,
           },
         }}
         onClick={() => {
-          document.getElementById('timeline')?.scrollIntoView({ behavior: 'smooth' });
+          document
+            .getElementById("timeline")
+            ?.scrollIntoView({ behavior: "smooth" });
         }}
       >
-        <Typography 
-          variant="body2" 
-          sx={{ 
-            mb: 0.5, 
-            fontSize: '0.85rem',
+        <Typography
+          variant="body2"
+          sx={{
+            mb: 0.5,
+            fontSize: "0.85rem",
             fontWeight: 500,
-            letterSpacing: '1px',
+            letterSpacing: "1px",
           }}
         >
           גלול למטה
         </Typography>
-        <KeyboardArrowDownIcon 
-          sx={{ 
+        <KeyboardArrowDownIcon
+          sx={{
             fontSize: 36,
             animation: `${bounce} 2s infinite`,
-          }} 
+          }}
         />
       </Box>
     </Box>

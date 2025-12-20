@@ -250,6 +250,7 @@ const DesktopNavigation = ({ navigation, activeSection, trigger, onShareClick })
           mx: 2,
           py: 0.75,
           px: 2.5,
+          gap: 1,
           // Use 'background' to override the theme's gradient
           background: trigger 
             ? 'linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%)' 
