@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
+import { Analytics } from "@vercel/analytics/react";
 import theme from "./theme";
 import HomePage from "./pages/HomePage";
 import StoryPage from "./pages/StoryPage";
@@ -103,6 +104,7 @@ function App() {
     <ErrorBoundary>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <Analytics />
         <Router>
           <AppContent />
         </Router>
