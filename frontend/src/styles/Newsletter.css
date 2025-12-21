@@ -1,0 +1,287 @@
+/**
+ * Newsletter Component Styles
+ * 
+ * Styles for the newsletter modal and floating button.
+ * These styles complement the MUI component styles defined in JSX.
+ */
+
+/* =============================================================================
+   CSS VARIABLES
+   ============================================================================= */
+
+:root {
+  /* Primary colors */
+  --newsletter-primary: #3B82F6;
+  --newsletter-primary-light: #60A5FA;
+  --newsletter-primary-dark: #2563EB;
+  
+  /* Gradient */
+  --newsletter-gradient: linear-gradient(135deg, var(--newsletter-primary) 0%, var(--newsletter-primary-light) 100%);
+  --newsletter-gradient-hover: linear-gradient(135deg, var(--newsletter-primary-dark) 0%, var(--newsletter-primary) 100%);
+  
+  /* Shadows */
+  --newsletter-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+  --newsletter-shadow-hover: 0 6px 25px rgba(59, 130, 246, 0.5);
+  
+  /* Timing */
+  --newsletter-transition: 0.3s ease;
+}
+
+/* =============================================================================
+   FLOATING BUTTON ANIMATIONS
+   ============================================================================= */
+
+@keyframes newsletter-pulse {
+  0%, 100% {
+    box-shadow: var(--newsletter-shadow);
+  }
+  50% {
+    box-shadow: 0 4px 30px rgba(59, 130, 246, 0.6);
+  }
+}
+
+@keyframes newsletter-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =============================================================================
+   MODAL ANIMATIONS
+   ============================================================================= */
+
+@keyframes newsletter-slide-up {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes newsletter-success-bounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+/* =============================================================================
+   MODAL STYLES
+   ============================================================================= */
+
+.newsletter-modal {
+  direction: rtl;
+}
+
+.newsletter-modal__header {
+  background: var(--newsletter-gradient);
+  text-align: center;
+}
+
+.newsletter-modal__icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.newsletter-modal__title {
+  color: white;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.newsletter-modal__subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+/* =============================================================================
+   FORM STYLES
+   ============================================================================= */
+
+.newsletter-form {
+  direction: rtl;
+}
+
+.newsletter-form__field {
+  margin-bottom: 16px;
+}
+
+.newsletter-form__field--email {
+  margin-bottom: 24px;
+}
+
+/* RTL input alignment */
+.newsletter-form input {
+  text-align: right;
+}
+
+/* Submit button */
+.newsletter-form__submit {
+  border-radius: 25px !important;
+  padding: 12px 24px !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  background: var(--newsletter-gradient) !important;
+  transition: all var(--newsletter-transition) !important;
+}
+
+.newsletter-form__submit:hover:not(:disabled) {
+  background: var(--newsletter-gradient-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: var(--newsletter-shadow-hover) !important;
+}
+
+.newsletter-form__submit:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.newsletter-form__submit:disabled {
+  opacity: 0.7;
+}
+
+/* =============================================================================
+   SUCCESS STATE
+   ============================================================================= */
+
+.newsletter-success {
+  animation: newsletter-success-bounce 0.5s ease;
+}
+
+.newsletter-success__title {
+  font-weight: 600;
+}
+
+.newsletter-success__message {
+  margin-top: 4px;
+}
+
+/* =============================================================================
+   CLOSE BUTTON
+   ============================================================================= */
+
+.newsletter-close-btn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 10;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: background-color var(--newsletter-transition);
+}
+
+.newsletter-close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* =============================================================================
+   PRIVACY NOTE
+   ============================================================================= */
+
+.newsletter-privacy {
+  display: block;
+  text-align: center;
+  color: #718096;
+  margin-top: 16px;
+  font-size: 0.75rem;
+}
+
+/* =============================================================================
+   FLOATING BUTTON
+   ============================================================================= */
+
+.newsletter-fab {
+  position: fixed !important;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  width: 56px !important;
+  height: 56px !important;
+  background: var(--newsletter-gradient) !important;
+  box-shadow: var(--newsletter-shadow) !important;
+  transition: all var(--newsletter-transition) !important;
+  animation: newsletter-pulse 2s ease-in-out infinite;
+}
+
+.newsletter-fab:hover {
+  background: var(--newsletter-gradient-hover) !important;
+  transform: scale(1.1);
+  box-shadow: var(--newsletter-shadow-hover) !important;
+}
+
+.newsletter-fab:active {
+  transform: scale(0.95);
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .newsletter-fab {
+    bottom: 16px;
+    right: 16px;
+  }
+}
+
+/* =============================================================================
+   ERROR ALERT
+   ============================================================================= */
+
+.newsletter-error {
+  margin-bottom: 16px;
+  border-radius: 8px;
+}
+
+/* =============================================================================
+   LOADING STATE
+   ============================================================================= */
+
+.newsletter-loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+/* =============================================================================
+   ACCESSIBILITY
+   ============================================================================= */
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .newsletter-fab {
+    animation: none;
+  }
+  
+  .newsletter-success {
+    animation: none;
+  }
+  
+  .newsletter-fab:hover {
+    transform: none;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+.newsletter-fab:focus-visible {
+  outline: 3px solid var(--newsletter-primary-light);
+  outline-offset: 2px;
+}
+
+.newsletter-close-btn:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
